@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en" data-mode="paper">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caleb Vinson · The Daily Spread</title>
+<meta name="description" content="Caleb Vinson: MS Computational Finance at Carnegie Mellon. Systematic trading, derivatives pricing, power markets, market microstructure.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b23a12'/><text x='16' y='22' font-size='16' font-family='Georgia,serif' fill='%23fff' text-anchor='middle'>CV</text></svg>">
+<!-- Link previews. These are the only absolute URLs on the site: change this domain if the site moves. -->
+<link rel="canonical" href="https://vincal848.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vincal848.github.io/">
+<meta property="og:title" content="Caleb Vinson · The Daily Spread">
+<meta property="og:description" content="Systematic trading, derivatives pricing, power markets and market microstructure. MS Computational Finance, Carnegie Mellon.">
+<meta property="og:image" content="https://vincal848.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,900;1,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f2; --ink: #1a1a1a; --muted: #555; --rule: #1a1a1a; --hair: #c8c6c0; --accent: #b23a12; --up: #1d7a3a; --down: #a8261b;
+    --serif: "Libre Caslon Text", Georgia, serif; --sans: Inter, system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--serif); }
+  a { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  p { margin: 0 0 10px; }
+  img { max-width: 100%; display: block; }
+
+  /* ---------- masthead ---------- */
+  .topline { display: flex; justify-content: space-between; align-items: center; gap: 12px; font: 600 11px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; padding: 10px 0; }
+  #mode { font: 600 11px var(--sans); letter-spacing: .06em; text-transform: uppercase; background: none; border: 1px solid var(--ink); color: var(--ink); padding: 5px 10px; cursor: pointer; }
+  #mode b { font-weight: 700; }
+  .masthead { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 8px 0 6px; }
+  .masthead h1 { font: 900 clamp(34px, 7.5vw, 80px)/1 "Playfair Display", serif; margin: 0; letter-spacing: -.01em; text-align: center; }
+  .editor { text-align: center; font: italic 400 15px var(--serif); margin: 14px 0 0; }
+  .ear { font: 400 11px/1.35 var(--sans); border: 1px solid var(--rule); padding: 6px 8px; max-width: 190px; }
+  .ear b { display: block; text-transform: uppercase; letter-spacing: .05em; font-size: 10px; margin-bottom: 2px; }
+  .ear.r { justify-self: end; }
+  .edition { display: flex; justify-content: space-between; gap: 12px; border-top: 3px double var(--rule); border-bottom: 1px solid var(--rule); margin-top: 10px; padding: 5px 0; font: 600 11px/1.3 var(--sans); text-transform: uppercase; letter-spacing: .05em; }
+  .ticker { display: flex; flex-wrap: wrap; gap: 6px 22px; justify-content: space-between; border-bottom: 1px solid var(--rule); padding: 6px 0; font: 600 11px var(--sans); letter-spacing: .04em; }
+  .up { color: var(--up); } .down { color: var(--down); }
+  nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; padding: 7px 0; border-bottom: 3px double var(--rule); font: 600 12px var(--sans); text-transform: uppercase; letter-spacing: .05em; }
+
+  /* ---------- shared story styles ---------- */
+  .kicker { font: 700 11px var(--sans); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 0 0 4px; }
+  h2.hed { font: 700 clamp(26px, 3.6vw, 40px)/1.12 var(--serif); margin: 0 0 10px; }
+  h3.hed { font: 700 20px/1.2 var(--serif); margin: 0 0 6px; }
+  h4.hed { font: 700 16px/1.25 var(--serif); margin: 0 0 4px; }
+  .dek { font-style: italic; font-size: 17px; color: #333; margin: 0 0 10px; }
+  .byline { font: 600 11px var(--sans); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 12px; }
+  .stack { font: 600 11px var(--sans); color: var(--muted); letter-spacing: .03em; margin-top: 6px; }
+  .jump { font: 600 11px var(--sans); font-style: italic; color: var(--muted); }
+  .tag { font: 700 9px var(--sans); text-transform: uppercase; letter-spacing: .08em; border: 1px solid currentColor; padding: 1px 4px; margin-left: 4px; vertical-align: 2px; color: var(--muted); }
+  .body { text-align: justify; hyphens: auto; }
+  .lead .body > p:first-child::first-letter { float: left; font: 700 64px/.8 var(--serif); padding: 6px 6px 0 0; }
+  figure { margin: 0 0 12px; }
+  figcaption { font: 400 11.5px/1.4 var(--sans); color: var(--muted); margin-top: 5px; }
+  figcaption .credit { display: block; text-transform: uppercase; font-size: 9.5px; letter-spacing: .06em; margin-top: 2px; }
+  [data-mode="paper"] figure img { filter: grayscale(1) contrast(1.12); mix-blend-mode: multiply; }
+  /* ---------- spot colour (paper only, front page) ---------- */
+  [data-mode="paper"] .whatsnews > h2 { background: var(--accent); color: #fff; border: 0; padding: 5px 8px; }
+  [data-mode="paper"] .lead .body > p:first-child::first-letter { color: var(--accent); }
+  [data-mode="paper"] .pull { color: var(--accent); }
+  .pull { font: italic 700 21px/1.3 "Playfair Display", serif; border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule); padding: 10px 0; margin: 4px 0 12px; break-inside: avoid; text-align: left; }
+  .box { border: 1px solid var(--rule); padding: 10px 12px; margin-top: 16px; }
+  .box h2 { font: 700 12px var(--sans) !important; text-transform: uppercase; letter-spacing: .07em; margin: 0 0 8px !important; border: 0 !important; padding: 0 !important; }
+
+  /* ---------- front page ---------- */
+  .front { display: grid; grid-template-columns: 1fr 2.2fr 1.15fr; margin-top: 18px; }
+  .front > * { padding: 0 16px; }
+  .front > *:first-child { padding-left: 0; }
+  .front > *:last-child { padding-right: 0; }
+  .front > * + * { border-left: 1px solid var(--hair); }
+  .whatsnews > h2 { font: 700 13px var(--sans); text-transform: uppercase; letter-spacing: .06em; border-bottom: 2px solid var(--rule); padding-bottom: 4px; margin: 0 0 10px; }
+  .whatsnews ul { list-style: none; padding: 0; margin: 0; }
+  .whatsnews li { font-size: 14px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--hair); }
+  .whatsnews li:last-child { border: 0; }
+  .index { font: 400 12.5px/1.5 var(--sans); }
+  .index div { display: flex; justify-content: space-between; border-bottom: 1px dotted var(--hair); }
+  .index div:last-child { border: 0; }
+  .lead .body { column-count: 2; column-gap: 22px; column-rule: 1px solid var(--hair); }
+  .secondary article { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--hair); }
+  .secondary article:last-child { border: 0; }
+  .secondary p { font-size: 14.5px; }
+
+  /* ---------- feature band ---------- */
+  .feature { display: grid; grid-template-columns: 2fr 1fr; gap: 22px; border-top: 3px solid var(--rule); margin-top: 28px; padding-top: 16px; }
+  .feature .body { font-size: 15px; }
+
+  /* ---------- sections ---------- */
+  section.desk { margin-top: 30px; }
+  .desk > h2 { display: flex; justify-content: space-between; font: 700 14px var(--sans); text-transform: uppercase; letter-spacing: .08em; border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 6px 0; margin: 0 0 14px; }
+  .desk > h2 small { font-weight: 600; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .grid article { padding: 0 16px 16px; }
+  .grid article:nth-child(3n+1) { padding-left: 0; }
+  .grid article:nth-child(3n) { padding-right: 0; }
+  .grid article:not(:nth-child(3n+1)) { border-left: 1px solid var(--hair); }
+  .grid p { font-size: 14.5px; }
+  /* empty slot for a future project: replace it with a copy of any <article> */
+  .slot { color: var(--muted); font-style: italic; font-size: 14px; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 110px; border: 1px dashed var(--hair) !important; }
+
+  /* scorecard table */
+  table.data { width: 100%; border-collapse: collapse; font: 400 13px/1.35 var(--sans); }
+  .data caption { text-align: left; font: 700 13px var(--sans); text-transform: uppercase; letter-spacing: .07em; border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 6px 0; margin-bottom: 4px; }
+  .data th { text-align: left; font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--rule); padding: 5px 8px 5px 0; }
+  .data td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  .data tr:nth-child(even) td { background: rgba(0,0,0,.03); }
+  .data .v { font-weight: 700; white-space: nowrap; }
+  .tablenote { font: 400 11px var(--sans); color: var(--muted); margin-top: 6px; }
+
+  .upcoming ul { margin: 0; padding-left: 18px; font-size: 14px; }
+
+  /* ---------- about the author ---------- */
+  .about { display: grid; grid-template-columns: 220px 1.6fr 1fr; gap: 0; }
+  .about > * { padding: 0 16px; }
+  .about > *:first-child { padding-left: 0; }
+  .about > *:last-child { padding-right: 0; }
+  .about > * + * { border-left: 1px solid var(--hair); }
+  .portrait { position: relative; aspect-ratio: 4 / 5; border: 1px dashed var(--muted); display: flex; align-items: center; justify-content: center; text-align: center; font: 400 12px/1.4 var(--sans); color: var(--muted); padding: 12px; overflow: hidden; }
+  .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .facts { width: 100%; font: 400 13px/1.4 var(--sans); border-collapse: collapse; margin-top: 10px; }
+  .facts th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; padding: 5px 8px 5px 0; vertical-align: top; white-space: nowrap; }
+  .facts td { padding: 5px 0; border-bottom: 1px dotted var(--hair); }
+  .facts tr:first-child td { border-top: 0; }
+  .fill { color: var(--muted); font-style: italic; background: rgba(0,0,0,.05); padding: 0 4px; }
+  .about .body { column-count: 1; }
+  .corrections p { font-size: 14px; }
+
+  footer { margin: 36px 0 40px; border-top: 3px double var(--rule); padding-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; font: 600 11px var(--sans); text-transform: uppercase; letter-spacing: .05em; }
+
+  /* ================= SITE MODE (news-website look) ================= */
+  [data-mode="site"] { --bg: #fff; --hair: #e3e3e3; --muted: #666; }
+  [data-mode="site"] .topline { background: #111; color: #fff; margin: 0 -100vw; padding: 9px 100vw; }
+  [data-mode="site"] #mode { color: #fff; border-color: #fff; }
+  [data-mode="site"] .masthead { padding: 18px 0 4px; }
+  [data-mode="site"] .masthead h1 { font-size: clamp(28px, 4.5vw, 46px); }
+  [data-mode="site"] .ear { display: none; }
+  [data-mode="site"] .masthead { grid-template-columns: 1fr; }
+  [data-mode="site"] .edition { border-top: 0; border-bottom: 0; justify-content: center; color: var(--muted); font-weight: 400; }
+  [data-mode="site"] .edition span:not(:nth-child(2)) { display: none; }
+  [data-mode="site"] .ticker { background: #f6f6f6; border: 0; padding: 8px 12px; margin-top: 4px; }
+  [data-mode="site"] nav { position: sticky; top: 0; z-index: 2; background: #fff; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); text-transform: none; letter-spacing: 0; font-size: 14px; padding: 10px 0; }
+  [data-mode="site"] .body { text-align: left; }
+  [data-mode="site"] .lead .body { column-count: 1; }
+  [data-mode="site"] .lead .body > p:first-child::first-letter { float: none; font: inherit; padding: 0; }
+  [data-mode="site"] .lead .body > p:nth-child(n+3), [data-mode="site"] .pull, [data-mode="site"] .jump { display: none; }
+  [data-mode="site"] .kicker { color: #0274b6; }
+  [data-mode="site"] .dek { font-style: normal; color: var(--muted); }
+  [data-mode="site"] .byline { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 13px; }
+  [data-mode="site"] .whatsnews > h2, [data-mode="site"] .desk > h2, [data-mode="site"] .data caption { border-top: 0; border-bottom: 1px solid var(--ink); text-transform: none; letter-spacing: 0; font-size: 18px; font-family: var(--serif); }
+  [data-mode="site"] .desk > h2 small { display: none; }
+  [data-mode="site"] .feature { border-top: 1px solid var(--hair); }
+  [data-mode="site"] .box { border-color: var(--hair); border-radius: 6px; background: #fafafa; }
+  [data-mode="site"] figure img { border-radius: 4px; }
+  [data-mode="site"] .grid { gap: 20px; }
+  [data-mode="site"] .grid article { padding: 0 0 16px !important; border-left: 0 !important; border-bottom: 1px solid var(--hair); }
+  [data-mode="site"] .slot, [data-mode="site"] .portrait { border-radius: 6px; }
+  [data-mode="site"] .data tr:nth-child(even) td { background: #f7f7f7; }
+  [data-mode="site"] footer { border-top: 1px solid var(--hair); font-weight: 400; color: var(--muted); }
+
+  /* ---------- accessibility ---------- */
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: 6px 10px; font: 600 13px var(--sans); z-index: 9; }
+  .skip:focus { left: 8px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- print: always the paper ---------- */
+  @media print {
+    :root, [data-mode="site"] { --bg: #fff; --hair: #bbb; }
+    #mode, nav, .skip, .jump { display: none !important; }
+    .topline { background: none !important; color: var(--ink) !important; margin: 0 !important; padding: 0 0 6px !important; }
+    section, article, figure, tr { break-inside: avoid; }
+    a { text-decoration: none !important; }
+  }
+
+  /* ---------- small screens ---------- */
+  @media (max-width: 860px) {
+    .masthead { grid-template-columns: 1fr; }
+    .ear { display: none; }
+    .front, .feature, .about { grid-template-columns: 1fr; }
+    .front > *, .about > * { border-left: 0 !important; padding: 0 !important; margin-bottom: 20px; }
+    .portrait { max-width: 240px; }
+    .grid { grid-template-columns: 1fr; }
+    .grid article { padding: 0 0 14px !important; border-left: 0 !important; border-bottom: 1px solid var(--hair); margin-bottom: 14px; }
+    .lead .body { column-count: 1; }
+    .edition span:first-child, .edition span:last-child { display: none; }
+    .edition { justify-content: center; }
+    .data .hide-sm { display: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#front">Skip to content</a>
+<div class="wrap">
+
+  <div class="topline">
+    <span>Pittsburgh · Texas</span>
+    <button id="mode" type="button" aria-label="Toggle paper or site layout"><b>Paper</b> / Site</button>
+  </div>
+
+  <header class="masthead">
+    <div class="ear"><b>Inside</b>Five years of New York grid prices, forecast as a distribution. A1</div>
+    <div><h1>The Daily Spread</h1><p class="editor">Caleb Vinson, Editor</p></div>
+    <div class="ear r"><b>Benchmarks</b>Where the naive baseline won, and where it didn't. B2</div>
+  </header>
+  <div class="edition">
+    <span>Vol. I · No. 1</span>
+    <span id="today"></span>
+    <span>Markets · Models · Code</span>
+  </div>
+
+  <div class="ticker" aria-label="Repositories by language">
+    <span>PYTHON <span class="up">▲ 14</span></span>
+    <span>R <span class="up">▲ 2</span></span>
+    <span>C <span class="up">▲ 2</span></span>
+    <span>VBA <span class="up">▲ 1</span></span>
+    <!-- counts updated by hand: gh repo list vincal848 --visibility public -->
+    <span>PUBLIC REPOS <span class="up">▲ 19</span></span>
+    <span>IN PROGRESS <span class="down">● 3</span></span>
+  </div>
+
+  <nav>
+    <a href="#front">Front Page</a>
+    <a href="#markets">Markets</a>
+    <a href="#scorecard">Scorecard</a>
+    <a href="#pricing">Pricing &amp; Models</a>
+    <a href="#tools">Tools</a>
+    <a href="#careers">Careers</a>
+    <a href="#research">Research</a>
+    <a href="#about">About</a>
+    <a href="resume.pdf" target="_blank" rel="noopener">Résumé</a>
+    <a href="mailto:calebjvinson848@gmail.com">Contact</a>
+  </nav>
+
+  <!-- ================= A1 FRONT PAGE ================= -->
+  <main id="front" class="front">
+
+    <aside class="whatsnews">
+      <h2>What's News</h2>
+      <ul>
+        <li><strong>Power markets:</strong> NYISO interzonal spreads and probabilistic LMP forecasting are underway, with DART and FTR work to follow.</li>
+        <li><strong>Microstructure:</strong> An RL market maker trades against multivariate Hawkes order flow, backed by a matching engine written in C.</li>
+        <li><strong>Competition:</strong> Entered the IMC Prosperity trading challenge.</li>
+        <li><strong>Strategies:</strong> Volatility and ETF trading algorithms are in development.</li>
+        <li><strong>Education:</strong> MS in Computational Finance, Carnegie Mellon University.</li>
+      </ul>
+      <div class="box index">
+        <h2>In This Issue</h2>
+        <div><a href="#front">Front Page</a><span>A1</span></div>
+        <div><a href="#grid-feature">The Grid, Mapped</a><span>A2</span></div>
+        <div><a href="#markets">Markets &amp; Trading</a><span>B1</span></div>
+        <div><a href="#scorecard">Benchmark Scorecard</a><span>B2</span></div>
+        <div><a href="#pricing">Pricing &amp; Models</a><span>C1</span></div>
+        <div><a href="#tools">Tools &amp; Other</a><span>D1</span></div>
+        <div><a href="#careers">Careers &amp; Education</a><span>E1</span></div>
+        <div><a href="#research">Research &amp; Writing</a><span>E2</span></div>
+        <div><a href="#about">About the Author</a><span>E3</span></div>
+      </div>
+    </aside>
+
+    <article class="lead">
+      <p class="kicker">Power Markets</p>
+      <h2 class="hed"><a href="https://github.com/vincal848/nyiso-grid">Five Years of New York Grid Data, One Probabilistic Price Forecast</a></h2>
+      <p class="dek">A market-data warehouse feeds LEAR, LightGBM and structural congestion models, all scored under time-block cross-validation.</p>
+      <p class="byline">By Caleb Vinson</p>
+      <figure>
+        <img src="assets/nyiso-forecast.png" alt="Day-ahead forecast distribution for New York City on July 15, 2025, showing 50% and 90% intervals around the forecast mean, with the actual price peaking near $190 around 6 p.m.">
+        <figcaption>Day-ahead forecast for N.Y.C. on July 15, 2025. The shaded bands are the 50% and 90% intervals; the dashed line is what the price actually did.<span class="credit">nyiso-grid dashboard</span></figcaption>
+      </figure>
+      <div class="body">
+        <p>Electricity prices in New York move with load, weather and transmission congestion, and those forces change from one hour to the next. The nyiso-grid project collects five years of NYISO market data into a DuckDB warehouse. On top of it sit locational marginal price forecasts that give a full distribution instead of a single point estimate.</p>
+        <p>The models are a LEAR regression, LightGBM, and a structural congestion model, each tested on time-block cross-validation so that no future data leaks into training.</p>
+        <p class="pull">“A forecast that only gives one number can't tell you how wrong it might be.”</p>
+        <p>Overfitting diagnostics are part of the pipeline, not an afterthought. A dashboard is included, and the next phase is horizon-indexed price signals, with DART and FTR work to follow.</p>
+        <p class="jump"><a href="#grid-feature">Map of the constraints, A2 →</a></p>
+      </div>
+      <p class="stack">Python · DuckDB · LightGBM</p>
+    </article>
+
+    <aside class="secondary">
+      <article>
+        <p class="kicker">Systematic Trading</p>
+        <h3 class="hed"><a href="https://github.com/vincal848/regime-trader">An HMM Reads the Regime, Then Trades SPY Hourly</a></h3>
+        <figure>
+          <img src="assets/regime-equity.png" alt="Walk-forward growth of $1: buy-and-hold SPY rises to about 1.32 while the regime trader drifts to about 0.95, with HMM states shaded behind.">
+          <figcaption>Walk-forward on demo data. So far, buy-and-hold is ahead.<span class="credit">regime-trader</span></figcaption>
+        </figure>
+        <p>Paper-traded on IBKR, with forward-filtered states, per-regime playbooks and hard risk limits in code.</p>
+        <p class="stack">Python · IBKR</p>
+      </article>
+      <article>
+        <p class="kicker">Microstructure</p>
+        <h3 class="hed"><a href="https://github.com/vincal848/market-microstructure">A Simulated Order Book, Calibrated to Nasdaq</a></h3>
+        <p>A Hawkes-driven limit order book simulator fit to ITCH data, where Avellaneda-Stoikov and Double DQN market makers compete and every dollar of PnL is attributed.</p>
+        <p class="stack">Python · PyTorch</p>
+      </article>
+      <article>
+        <p class="kicker">Derivatives</p>
+        <h3 class="hed"><a href="https://github.com/vincal848/options-pricing">Three Methods, One Price</a></h3>
+        <p>Black-Scholes, a CRR binomial tree and Crank-Nicolson finite differences price the same options and check one another.</p>
+        <p class="stack">Python</p>
+      </article>
+    </aside>
+  </main>
+
+  <!-- ================= A2 FEATURE ================= -->
+  <section id="grid-feature" class="feature">
+    <figure>
+      <img src="assets/nyiso-structure.png" alt="nyiso-grid dashboard: a map of New York shaded by shift factor for the Central East constraint, a table of the top ten binding constraints, a constraint co-binding network graph and a month-over-month structural drift chart.">
+      <figcaption>Shift factors for the Central East interface, the ten constraints with the largest shadow prices, which constraints bind together, and how much that structure drifts month to month.<span class="credit">nyiso-grid dashboard</span></figcaption>
+    </figure>
+    <div>
+      <p class="kicker">Graphic · A2</p>
+      <h3 class="hed">The Grid, Mapped</h3>
+      <p class="byline">By Caleb Vinson</p>
+      <div class="body">
+        <p>Congestion is why a megawatt-hour in Manhattan can cost several times what it does upstate. The structural model learns which transmission constraints bind, how strongly each one moves prices at each node, and which constraints tend to bind together.</p>
+        <p>Because the grid itself changes, the model also tracks how much that structure drifts from one month to the next, so stale assumptions show up before they become bad forecasts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTIONS =================
+       To add a project: copy any <article> into the right .grid,
+       or replace a .slot. Three per row on desktop. -->
+
+  <section id="markets" class="desk">
+    <h2>Markets &amp; Trading <small>B1</small></h2>
+    <div class="grid">
+      <article>
+        <p class="kicker">Competition</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/imc-prosperity-market-making">Market Maker Beaten by Buy-and-Hold on the Trending Product</a></h4>
+        <p>IMC Prosperity Round 1 bots with Avellaneda-Stoikov inventory skew and fill-rate-optimal spreads.</p>
+        <p class="stack">Python</p>
+      </article>
+      <article>
+        <p class="kicker">Infrastructure <span class="tag">In Progress</span></p>
+        <h4 class="hed"><a href="https://github.com/vincal848/lob-engine-c">A Matching Engine in C</a></h4>
+        <p>A price-time priority core with a preallocated pool, tested against a naive reference and built for LOBSTER replay.</p>
+        <p class="stack">C</p>
+      </article>
+      <article>
+        <p class="kicker">Commodities</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/oil-price-prediction">Neural Nets Lose to Yesterday's Oil Price</a></h4>
+        <p>An LSTM and an echo state network forecast WTI one step ahead, and naive persistence beats both.</p>
+        <p class="stack">Python · TensorFlow</p>
+      </article>
+      <article>
+        <p class="kicker">Sports</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/cfb-modeling">College Football, Forecast Without Peeking</a></h4>
+        <p>Cutoff-aware CFBD ingestion, coherent score distributions and deterministic picks.</p>
+        <p class="stack">Python</p>
+      </article>
+      <article>
+        <p class="kicker">ESG <span class="tag">In Progress</span></p>
+        <h4 class="hed"><a href="https://github.com/vincal848/esg-imaging">Can Satellites See ESG Before the Ratings Do?</a></h4>
+        <p>VIIRS gas flaring and Sentinel-2 forest-loss signals around company facilities, tested against ratings and returns.</p>
+        <p class="stack">Python</p>
+      </article>
+      <article class="slot">Space reserved for the next project</article>
+    </div>
+  </section>
+
+  <!-- ================= B2 SCORECARD ================= -->
+  <section id="scorecard" class="desk">
+    <table class="data">
+      <caption>Benchmark Scorecard · B2</caption>
+      <thead>
+        <tr><th>Project</th><th>Model</th><th>Benchmark</th><th>Result</th><th class="hide-sm">Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://github.com/vincal848/monte-carlo-options-multilang">monte-carlo-options-multilang</a></td><td>MC with antithetic variates</td><td>Black-Scholes</td><td class="v up">▲ Matched</td><td class="hide-sm">All three languages within 1.3 SE</td></tr>
+        <tr><td><a href="https://github.com/vincal848/options-pricing">options-pricing</a></td><td>CRR tree, Crank-Nicolson</td><td>Black-Scholes</td><td class="v up">▲ Matched</td><td class="hide-sm">Three methods cross-validated</td></tr>
+        <tr><td><a href="https://github.com/vincal848/term-structure-modeling">term-structure-modeling</a></td><td>Four short-rate models</td><td>Closed-form bond prices</td><td class="v up">▲ Matched</td><td class="hide-sm">Vasicek, CIR, HW, BK</td></tr>
+        <tr><td><a href="https://github.com/vincal848/game-theory-equilibria">game-theory-equilibria</a></td><td>Equilibrium solvers</td><td>Gibbons' examples</td><td class="v up">▲ Matched</td><td class="hide-sm">Textbook answers reproduced</td></tr>
+        <tr><td><a href="https://github.com/vincal848/oil-price-prediction">oil-price-prediction</a></td><td>LSTM, echo state network</td><td>Naive persistence</td><td class="v down">▼ Lost</td><td class="hide-sm">Persistence wins one step ahead</td></tr>
+        <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Avellaneda-Stoikov MM</td><td>Buy-and-hold</td><td class="v down">▼ Lost</td><td class="hide-sm">On the trending product</td></tr>
+        <tr><td><a href="https://github.com/vincal848/regime-trader">regime-trader</a></td><td>HMM regime strategy</td><td>Buy-and-hold SPY</td><td class="v down">▼ Behind</td><td class="hide-sm">Demo walk-forward Sharpe −0.96 vs 1.08</td></tr>
+      </tbody>
+    </table>
+    <p class="tablenote">Results as reported in each repository's README. ▲ model met its benchmark · ▼ benchmark won.</p>
+  </section>
+
+  <section id="pricing" class="desk">
+    <h2>Pricing &amp; Models <small>C1</small></h2>
+    <div class="grid">
+      <article>
+        <p class="kicker">Rates</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/term-structure-modeling">Four Short-Rate Models, Checked Against Closed Form</a></h4>
+        <figure>
+          <img src="assets/ns-fit.png" alt="Nelson-Siegel curve fitted to Treasury yields on September 29, 2026, rising from about 4.0% at short maturities to about 5.5% at 30 years.">
+          <figcaption>Nelson-Siegel fit to the Treasury curve, Sept. 29, 2026.<span class="credit">term-structure-modeling</span></figcaption>
+        </figure>
+        <p>Vasicek, CIR, Hull-White and Black-Karasinski, plus a Nelson-Siegel fit to the Treasury curve.</p>
+        <p class="stack">R</p>
+      </article>
+      <article>
+        <p class="kicker">Simulation</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/monte-carlo-options-multilang">Monte Carlo in Three Languages</a></h4>
+        <figure>
+          <img src="assets/mc-paths.png" alt="Thirty simulated risk-neutral GBM price paths starting at 100 and fanning out between about 60 and 170 over one year.">
+          <figcaption>Thirty risk-neutral GBM paths, S₀ = 100, r = 3%, σ = 20%.<span class="credit">monte-carlo-options-multilang</span></figcaption>
+        </figure>
+        <p>Risk-neutral GBM with antithetic variates in C++, Python and R, each within 1.3 SE of Black-Scholes.</p>
+        <p class="stack">C++ · Python · R</p>
+      </article>
+      <article>
+        <p class="kicker">Quantum</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/quantum-portfolio">QAOA Picks a Portfolio</a></h4>
+        <p>Cardinality-constrained selection, benchmarked against the exact optimum and a greedy classical solver.</p>
+        <p class="stack">Python · Qiskit</p>
+      </article>
+      <article>
+        <p class="kicker">Economics</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/game-theory-equilibria">Equilibrium Solvers, Graded by Gibbons</a></h4>
+        <p>Cournot, bimatrix Nash, Bayesian Cournot and grim-trigger thresholds, checked against textbook examples.</p>
+        <p class="stack">Python</p>
+      </article>
+      <article>
+        <p class="kicker">Econometrics</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/used-car-price-regression">What a Used Car Is Worth</a></h4>
+        <p>VIF-based backward elimination and OLS, validated on synthetic data with known coefficients.</p>
+        <p class="stack">Python</p>
+      </article>
+      <article class="slot">Space reserved for the next project</article>
+    </div>
+  </section>
+
+  <section id="tools" class="desk">
+    <h2>Tools &amp; Other <small>D1</small></h2>
+    <div class="grid">
+      <article>
+        <p class="kicker">Data</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/sas-to-csv">SAS Exports, Converted in Parallel</a></h4>
+        <p>Field counting per line and PSOCK workers, benchmarked serial vs parallel on CRSP-scale files.</p>
+        <p class="stack">R</p>
+      </article>
+      <article>
+        <p class="kicker">Automation</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/contract-automation">Excel Macros That Write the Contracts</a></h4>
+        <p>VBA consolidates workbooks, charts monthly metrics and fills Word templates, with the math checked against a Python mirror.</p>
+        <p class="stack">VBA</p>
+      </article>
+      <article>
+        <p class="kicker">Fundamentals</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/k-and-r-c-solutions">Working Through K&amp;R</a></h4>
+        <p>C99 solutions with unit and golden I/O tests, CI on gcc, clang and ASan/UBSan.</p>
+        <p class="stack">C</p>
+      </article>
+      <article>
+        <p class="kicker">Running <span class="tag">In Progress</span></p>
+        <h4 class="hed"><a href="https://github.com/vincal848/pose-estimation">Running Form From a Phone Video</a></h4>
+        <p>MediaPipe pose landmarks turned into cadence, ground contact time and oscillation.</p>
+        <p class="stack">Python</p>
+      </article>
+      <article>
+        <p class="kicker">Games</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/cars-simulator">The Americas, 1836</a></h4>
+        <p>A turn-based grand strategy game. You play on a map, and the simulation plays on graphs.</p>
+        <p class="stack">Python</p>
+      </article>
+      <article class="box upcoming">
+        <h2>Coming Up</h2>
+        <ul>
+          <li>nyiso-grid: horizon-indexed price signals, then DART and FTR</li>
+          <li>lob-engine-c: full LOBSTER replay</li>
+          <li>esg-imaging and pose-estimation: from scaffold to results</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= E1 CAREERS & EDUCATION =================
+       One <tr> per entry, newest first. -->
+  <section id="careers" class="desk">
+    <h2>Careers &amp; Education <small>E1</small></h2>
+    <table class="data">
+      <thead>
+        <tr><th>Dates</th><th>Position</th><th>Organization</th><th class="hide-sm">Detail</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="fill">[2025–2026]</span></td><td>MS, Computational Finance</td><td>Carnegie Mellon University</td><td class="hide-sm"><span class="fill">[capstone, honors]</span></td></tr>
+        <tr><td><span class="fill">[year]</span></td><td>Competitor</td><td>IMC Prosperity 4</td><td class="hide-sm">Market-making bots; see <a href="https://github.com/vincal848/imc-prosperity-market-making"><u>repo</u></a></td></tr>
+        <tr><td><span class="fill">[dates]</span></td><td><span class="fill">[Role]</span></td><td><span class="fill">[Company / internship]</span></td><td class="hide-sm"><span class="fill">[one line on what you did]</span></td></tr>
+        <tr><td><span class="fill">[dates]</span></td><td><span class="fill">[Role]</span></td><td><span class="fill">[Research assistantship / competition]</span></td><td class="hide-sm"><span class="fill">[one line]</span></td></tr>
+        <tr><td><span class="fill">[year]</span></td><td><span class="fill">[BS/BA, major]</span></td><td>Texas Tech University</td><td class="hide-sm"><span class="fill">[GPA, honors]</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ================= E2 RESEARCH & WRITING =================
+       Copy an <article> per paper, chapter or project; replace the slots. -->
+  <section id="research" class="desk">
+    <h2>Research &amp; Writing <small>E2</small></h2>
+    <div class="grid">
+      <article>
+        <p class="kicker">Book Chapters</p>
+        <h4 class="hed">Four Chapters on Sentiment Analysis From Text</h4>
+        <p><span class="fill">[Book title, editors, publisher, year; your coauthors; link]</span></p>
+      </article>
+      <article class="slot">[Research project: title, coauthors, status]</article>
+      <article class="slot">[Research project: title, coauthors, status]</article>
+    </div>
+  </section>
+
+  <!-- ================= E3 ABOUT THE AUTHOR =================
+       Bio photo: save a portrait as assets/bio.jpg and it appears automatically.
+       Fill in the .fill placeholders below. -->
+  <section id="about" class="desk">
+    <h2>About the Author <small>E3</small></h2>
+    <div class="about">
+      <div>
+        <figure>
+          <div class="portrait">
+            Bio photo<br>save as assets/bio.jpg
+            <img src="assets/bio.jpg" alt="Portrait of Caleb Vinson" onerror="this.remove()">
+          </div>
+          <figcaption>Caleb Vinson</figcaption>
+        </figure>
+      </div>
+      <div>
+        <p class="kicker">Profile</p>
+        <h3 class="hed">Beat the Benchmark, or Say So</h3>
+        <div class="body">
+          <p>Howdy, and thanks for reading. I'm a Master's student in Computational Finance at Carnegie Mellon University, by way of Texas. My work is in algorithmic and systematic trading, derivatives pricing, and forecasting in commodity and equity markets. Most of it is statistical modeling and simulation in Python, R and C/C++.</p>
+          <p>Every project in this paper is measured against something: a closed form, an exact optimum, a textbook answer, or a naive baseline. When the baseline wins, the headline says so.</p>
+          <p><span class="fill">[A few more sentences about you: background, what you're looking for, interests outside of work.]</span></p>
+        </div>
+        <table class="facts">
+          <tr><th>Education</th><td>MS Computational Finance, Carnegie Mellon University<br><span class="fill">[Undergraduate degree, Texas Tech University, year]</span></td></tr>
+          <tr><th>Focus</th><td>Systematic trading, derivatives pricing, power markets, market microstructure</td></tr>
+          <tr><th>Languages</th><td>Python, R, C/C++, SQL, VBA</td></tr>
+          <tr><th>Seeking</th><td><span class="fill">[e.g. Quant trading / research roles, Summer 2027]</span></td></tr>
+          <tr><th>Résumé</th><td><a href="resume.pdf" target="_blank" rel="noopener"><u>Download PDF</u></a> <span class="fill">[add resume.pdf to the site folder]</span></td></tr>
+          <tr><th>Contact</th><td><a href="mailto:calebjvinson848@gmail.com"><u>calebjvinson848@gmail.com</u></a> · <a href="https://github.com/vincal848"><u>GitHub</u></a> · <span class="fill">[LinkedIn]</span></td></tr>
+        </table>
+        <p class="byline" style="margin-top:14px">Contact the editor: <a href="mailto:calebjvinson848@gmail.com"><u>calebjvinson848@gmail.com</u></a> · <a href="https://github.com/vincal848"><u>GitHub</u></a> · <span class="fill">[LinkedIn]</span></p>
+      </div>
+      <div class="corrections">
+        <div class="box" style="margin:0 0 16px">
+          <h2>Skills &amp; Coursework</h2>
+          <table class="facts">
+            <tr><th>Languages</th><td>Python, R, C, C++, SQL, VBA</td></tr>
+            <tr><th>Libraries</th><td>NumPy, pandas, SciPy, statsmodels, LightGBM, PyTorch, TensorFlow, Qiskit</td></tr>
+            <tr><th>Data</th><td>DuckDB, Nasdaq ITCH, NYISO, CRSP/WRDS, IBKR API</td></tr>
+            <tr><th>Coursework</th><td><span class="fill">[MSCF courses, e.g. Stochastic Calculus, Financial Computing]</span></td></tr>
+          </table>
+        </div>
+        <p class="kicker">Corrections &amp; Amplifications</p>
+        <p>An LSTM forecasting WTI crude did not beat naive persistence. Neither did the echo state network. (<a href="https://github.com/vincal848/oil-price-prediction"><u>oil-price-prediction</u></a>)</p>
+        <p>On the trending product in IMC Prosperity Round 1, buy-and-hold outperformed the market maker. (<a href="https://github.com/vincal848/imc-prosperity-market-making"><u>imc-prosperity-market-making</u></a>)</p>
+        <p>The regime trader's walk-forward on demo data trails buy-and-hold SPY. It does not yet pass its own backtest gates. (<a href="https://github.com/vincal848/regime-trader"><u>regime-trader</u></a>)</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Caleb Vinson</span>
+    <span>A Front · B Markets · C Pricing · D Tools · E Careers, Research &amp; About</span>
+    <span><a href="https://github.com/vincal848">GitHub</a> · <a href="mailto:calebjvinson848@gmail.com">Email</a></span>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('today').textContent =
+    new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+  const root = document.documentElement, btn = document.getElementById('mode');
+  function setMode(m) {
+    root.dataset.mode = m;
+    btn.innerHTML = m === 'paper' ? '<b>Paper</b> / Site' : 'Paper / <b>Site</b>';
+    try { localStorage.setItem('mode', m); } catch (e) {}
+  }
+  try { setMode(localStorage.getItem('mode') || 'paper'); } catch (e) { setMode('paper'); }
+  btn.onclick = () => setMode(root.dataset.mode === 'paper' ? 'site' : 'paper');
+</script>
+</body>
+</html>
