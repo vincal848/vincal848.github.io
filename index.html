@@ -189,6 +189,7 @@
     .edition span:first-child, .edition span:last-child { display: none; }
     .edition { justify-content: center; }
     .data .hide-sm { display: none; }
+    .data .v { white-space: normal; }
   }
 </style>
 </head>
@@ -219,7 +220,6 @@
     <span>VBA <span class="up">▲ 1</span></span>
     <!-- counts updated by hand: gh repo list vincal848 --visibility public -->
     <span>PUBLIC REPOS <span class="up">▲ 19</span></span>
-    <span>IN PROGRESS <span class="down">● 2</span></span>
   </div>
 
   <nav>
@@ -240,9 +240,9 @@
     <aside class="whatsnews">
       <h2>What's News</h2>
       <ul>
-        <li><strong>Power markets:</strong> NYISO interzonal spreads and probabilistic LMP forecasting are underway, with DART and FTR work to follow.</li>
-        <li><strong>Microstructure:</strong> An RL market maker trades against multivariate Hawkes order flow, backed by a matching engine written in C.</li>
-        <li><strong>Competition:</strong> Entered the IMC Prosperity trading challenge.</li>
+        <li><strong>Power markets:</strong> Joint day-ahead/real-time price scenarios now feed TCC and DART pricers. Neither beats its baseline yet; the DART test runs forward on live data.</li>
+        <li><strong>Microstructure:</strong> A DQN market maker beats Avellaneda-Stoikov on held-out seeds but only ties a fixed spread. The C matching engine now has an exchange layer and a threaded gateway.</li>
+        <li><strong>Competition:</strong> In IMC Prosperity, a re-tuned market maker beats its fixed-value baseline out of sample.</li>
         <li><strong>Strategies:</strong> Volatility and ETF trading algorithms are in development.</li>
         <li><strong>Education:</strong> MS in Computational Finance, Carnegie Mellon University.</li>
       </ul>
@@ -273,7 +273,7 @@
         <p>Electricity prices in New York move with load, weather and transmission congestion, and those forces change from one hour to the next. The nyiso-grid project collects five years of NYISO market data into a DuckDB warehouse. On top of it sit locational marginal price forecasts that give a full distribution instead of a single point estimate.</p>
         <p>The models are a LEAR regression, LightGBM, and a structural congestion model, each tested on time-block cross-validation so that no future data leaks into training.</p>
         <p class="pull">“A forecast that only gives one number can't tell you how wrong it might be.”</p>
-        <p>Overfitting diagnostics are part of the pipeline, not an afterthought. A dashboard is included, and the next phase is horizon-indexed price signals, with DART and FTR work to follow.</p>
+        <p>Overfitting diagnostics are part of the pipeline, not an afterthought. A dashboard is included. Joint DA/RT scenarios now feed TCC and DART pricers; neither beats its baseline yet, so the DART pricer is being tested forward on live data.</p>
         <p class="jump"><a href="#grid-feature">Map of the constraints, A2 →</a></p>
       </div>
       <p class="stack">Python · DuckDB · LightGBM</p>
@@ -293,7 +293,7 @@
       <article>
         <p class="kicker">Microstructure</p>
         <h3 class="hed"><a href="https://github.com/vincal848/market-microstructure">A Simulated Order Book, Calibrated to Nasdaq</a></h3>
-        <p>A Hawkes-driven limit order book simulator fit to ITCH data, where Avellaneda-Stoikov and Double DQN market makers compete and every dollar of PnL is attributed.</p>
+        <p>A Hawkes-driven limit order book simulator fit to ITCH data, where a Double DQN market maker beats Avellaneda-Stoikov on held-out seeds but only ties a fixed spread.</p>
         <p class="stack">Python · PyTorch</p>
       </article>
       <article>
@@ -331,8 +331,8 @@
     <div class="grid">
       <article>
         <p class="kicker">Competition</p>
-        <h4 class="hed"><a href="https://github.com/vincal848/imc-prosperity-market-making">Market Maker Beaten by Buy-and-Hold on the Trending Product</a></h4>
-        <p>IMC Prosperity Round 1 bots with Avellaneda-Stoikov inventory skew and fill-rate-optimal spreads.</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/imc-prosperity-market-making">A Market Maker That Beats Its Baseline, and a Product Where Nothing Can</a></h4>
+        <p>On the mean-reverting product, a re-tuned market maker beats its fixed-value baseline on unseen days under two fill models. On the trending one, holding the 80-unit limit is the ceiling.</p>
         <p class="stack">Python</p>
       </article>
       <article>
@@ -344,19 +344,19 @@
       <article>
         <p class="kicker">Commodities</p>
         <h4 class="hed"><a href="https://github.com/vincal848/oil-price-prediction">Neural Nets Lose to Yesterday's Oil Price</a></h4>
-        <p>An LSTM and an echo state network forecast WTI one step ahead, and naive persistence beats both.</p>
+        <p>An LSTM and an echo state network forecast WTI one step ahead, and naive persistence beats both. So do ridge return models, on two pre-registered holdouts.</p>
         <p class="stack">Python · TensorFlow</p>
       </article>
       <article>
         <p class="kicker">Sports</p>
-        <h4 class="hed"><a href="https://github.com/vincal848/cfb-modeling">College Football, Forecast Without Peeking</a></h4>
-        <p>Cutoff-aware CFBD ingestion, coherent score distributions and deterministic picks.</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/cfb-modeling">College Football Against the Closing Line: 33 Tests, No Edge Yet</a></h4>
+        <p>Ratings, Kalshi biases, key-number ladders, weather, cohorts and market making, each with a protocol written first and scored after fees.</p>
         <p class="stack">Python</p>
       </article>
       <article>
-        <p class="kicker">ESG <span class="tag">In Progress</span></p>
+        <p class="kicker">ESG</p>
         <h4 class="hed"><a href="https://github.com/vincal848/esg-imaging">Can Satellites See ESG Before the Ratings Do?</a></h4>
-        <p>VIIRS gas flaring and Sentinel-2 forest-loss signals around company facilities, tested against ratings and returns.</p>
+        <p>Forest loss around 2,557 EPA-reporting facilities shows no lead over enforcement actions in two pre-registered tests. Flaring and ratings need licensed data.</p>
         <p class="stack">Python</p>
       </article>
       <article class="slot">Space reserved for the next project</article>
@@ -376,12 +376,16 @@
         <tr><td><a href="https://github.com/vincal848/term-structure-modeling">term-structure-modeling</a></td><td>Four short-rate models</td><td>Closed-form bond prices</td><td class="v up">▲ Matched</td><td class="hide-sm">Vasicek, CIR, HW, BK</td></tr>
         <tr><td><a href="https://github.com/vincal848/lob-engine-c">lob-engine-c</a></td><td>C matching engine replay</td><td>LOBSTER order book snapshots</td><td class="v up">▲ Matched</td><td class="hide-sm">0 of 1.07M rows mismatched, AAPL and MSFT</td></tr>
         <tr><td><a href="https://github.com/vincal848/game-theory-equilibria">game-theory-equilibria</a></td><td>Equilibrium solvers</td><td>Gibbons' examples</td><td class="v up">▲ Matched</td><td class="hide-sm">Textbook answers reproduced</td></tr>
-        <tr><td><a href="https://github.com/vincal848/oil-price-prediction">oil-price-prediction</a></td><td>LSTM, echo state network</td><td>Naive persistence</td><td class="v down">▼ Lost</td><td class="hide-sm">Persistence wins one step ahead</td></tr>
-        <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Avellaneda-Stoikov MM</td><td>Buy-and-hold</td><td class="v down">▼ Lost</td><td class="hide-sm">On the trending product</td></tr>
+        <tr><td><a href="https://github.com/vincal848/oil-price-prediction">oil-price-prediction</a></td><td>LSTM, echo state network</td><td>Naive persistence</td><td class="v down">▼ Lost</td><td class="hide-sm">Persistence also beats ridge return models on two holdouts</td></tr>
+        <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Re-tuned MM (Ash)</td><td>Fixed-value MM</td><td class="v up">▲ Beat</td><td class="hide-sm">Unseen days, both fill models</td></tr>
+        <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Trend-aware MM (Pepper)</td><td>Hold to the 80-unit limit</td><td class="v down">▼ Lost</td><td class="hide-sm">Holding the limit is the ceiling</td></tr>
+        <tr><td><a href="https://github.com/vincal848/market-microstructure">market-microstructure</a></td><td>Double DQN market maker</td><td>Fixed spread</td><td class="v">● Tied</td><td class="hide-sm">Beats Avellaneda-Stoikov on held-out seeds</td></tr>
+        <tr><td><a href="https://github.com/vincal848/nyiso-grid">nyiso-grid</a></td><td>Structural TCC pricer</td><td>Same-season persistence</td><td class="v down">▼ No edge</td><td class="hide-sm">Walk-forward over past auctions</td></tr>
+        <tr><td><a href="https://github.com/vincal848/cfb-modeling">cfb-modeling</a></td><td>33 betting hypotheses</td><td>Closing line</td><td class="v down">▼ No edge</td><td class="hide-sm">After fees, protocols written first</td></tr>
         <tr><td><a href="https://github.com/vincal848/regime-trader">regime-trader</a></td><td>HMM regime strategy</td><td>Buy-and-hold SPY</td><td class="v down">▼ Behind</td><td class="hide-sm">Demo walk-forward Sharpe −0.96 vs 1.08</td></tr>
       </tbody>
     </table>
-    <p class="tablenote">Results as reported in each repository's README. ▲ model met its benchmark · ▼ benchmark won.</p>
+    <p class="tablenote">Results as reported in each repository's README. ▲ model met or beat its benchmark · ● tie · ▼ benchmark won.</p>
   </section>
 
   <section id="pricing" class="desk">
@@ -451,9 +455,9 @@
         <p class="stack">C</p>
       </article>
       <article>
-        <p class="kicker">Running <span class="tag">In Progress</span></p>
+        <p class="kicker">Running</p>
         <h4 class="hed"><a href="https://github.com/vincal848/pose-estimation">Running Form From a Phone Video</a></h4>
-        <p>MediaPipe pose landmarks turned into cadence, ground contact time and oscillation.</p>
+        <p>MediaPipe pose landmarks turned into cadence, ground contact time and oscillation. Cadence matches a hand count within 0.5 steps per minute on the clip it was tuned on; a held-out clip is still needed.</p>
         <p class="stack">Python</p>
       </article>
       <article>
@@ -465,8 +469,9 @@
       <article class="box upcoming">
         <h2>Coming Up</h2>
         <ul>
-          <li>nyiso-grid: horizon-indexed price signals, then DART and FTR</li>
-          <li>esg-imaging and pose-estimation: from scaffold to results</li>
+          <li>nyiso-grid: a year of forward DART paper trading</li>
+          <li>cfb-modeling: forward-logged 2026 Kalshi ladders and wind forecasts</li>
+          <li>pose-estimation: a held-out running clip</li>
         </ul>
       </article>
     </div>
@@ -542,7 +547,8 @@
         </div>
         <p class="kicker">Corrections &amp; Amplifications</p>
         <p>An LSTM forecasting WTI crude did not beat naive persistence. Neither did the echo state network. (<a href="https://github.com/vincal848/oil-price-prediction"><u>oil-price-prediction</u></a>)</p>
-        <p>On the trending product in IMC Prosperity Round 1, buy-and-hold outperformed the market maker. (<a href="https://github.com/vincal848/imc-prosperity-market-making"><u>imc-prosperity-market-making</u></a>)</p>
+        <p>The Monte Carlo README said the original drift error was 55 standard errors. At the original 10,000 paths it is 6 to 9. (<a href="https://github.com/vincal848/monte-carlo-options-multilang"><u>monte-carlo-options-multilang</u></a>)</p>
+        <p>The original IMC buy-and-hold baseline bought only 9 units, not the 80-unit limit, and the backtester let quotes fill against trades the trader had just seen. Both are fixed; on the trending product, holding the limit still wins. (<a href="https://github.com/vincal848/imc-prosperity-market-making"><u>imc-prosperity-market-making</u></a>)</p>
         <p>The regime trader's walk-forward on demo data trails buy-and-hold SPY. It does not yet pass its own backtest gates. (<a href="https://github.com/vincal848/regime-trader"><u>regime-trader</u></a>)</p>
       </div>
     </div>
