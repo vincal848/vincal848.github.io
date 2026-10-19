@@ -14,7 +14,7 @@
 
   const SCENES = {
     houston: {
-      name: 'Houston', accent: '#f2a855', feet: 742, min: 60, max: 1610, spawn: 300, fig: 12,
+      name: 'Houston', accent: '#f2a855', feet: 742, min: 60, max: 1610, spawn: 300, figH: 192,
       layers: ['background', 'main', 'foreground'],
       life: { birds: { y: [40, 140], x: [650, 1350] }, leaves: { colors: ['#9bb04a', '#c9a63a', '#6f8a35'], x: [0, 560], y: [120, 260] } },
       doors: [
@@ -24,7 +24,7 @@
       ],
     },
     'west-texas': {
-      name: 'Lubbock', accent: '#f08a3c', feet: 740, min: 60, max: 1610, spawn: 560, fig: 12,
+      name: 'Lubbock', accent: '#f08a3c', feet: 740, min: 60, max: 1610, spawn: 560, figH: 192,
       layers: ['background', 'main', 'foreground'],
       life: { birds: { y: [60, 220], x: [600, 1500] }, dust: true, tumbleweed: { y: 752 }, leaves: { colors: ['#b9862f', '#8a7a2c'], x: [0, 700], y: [60, 250], rate: 0.5 } },
       doors: [
@@ -34,7 +34,7 @@
       ],
     },
     pittsburgh: {
-      name: 'Pittsburgh', accent: '#f2c24a', feet: 745, min: 60, max: 1610, spawn: 640, fig: 9,
+      name: 'Pittsburgh', accent: '#f2c24a', feet: 745, min: 60, max: 1610, spawn: 640, figH: 144,
       layers: ['background', 'main', 'foreground'],
       life: { birds: { y: [20, 120], x: [300, 1000] }, sparkle: { y: [790, 935] }, leaves: { colors: ['#d9622b', '#e8a53a', '#b8341f'], x: [0, 450], y: [0, 300], also: [1300, 1672] } },
       doors: [
@@ -44,7 +44,7 @@
       ],
     },
     'the-city': {
-      name: 'Chicago', accent: '#7fd3c4', feet: 762, min: 120, max: 1560, spawn: 700, fig: 14,
+      name: 'Chicago', accent: '#7fd3c4', feet: 762, min: 120, max: 1560, spawn: 700, figH: 224,
       layers: ['background', 'recesses', 'main', 'foreground'],
       life: { rain: { ground: [715, 935] }, leaves: { colors: ['#c8692a', '#a8451f'], x: [0, 420], y: [0, 260], rate: 0.6, also: [1450, 1672] } },
       doors: [
@@ -138,22 +138,8 @@
     });
   }
 
-  // ---------- stand-in walker: a plain silhouette until real sprite art exists ----------
-  const BODY = ['..###...', '.#####..', '.#####..', '.#####..', '..###...', '.#####..', '#######.', '#######.', '#.###.#.', '#.###.#.', '.#####..'];
-  const LEGS = {
-    idle: ['.##.##..', '.##.##..', '.##.##..', '.##.##..', '.##.##..'],
-    a: ['.##.##..', '##...##.', '##...##.', '#.....#.', '#.....#.'],
-    b: ['..###...', '..###...', '..##....', '..##....', '..##....'],
-  };
-  function figure(legs) {
-    const c = document.createElement('canvas'); c.width = 8; c.height = 16;
-    const g = c.getContext('2d'); g.fillStyle = '#17121f';
-    [...BODY, ...legs].forEach((row, y) => [...row].forEach((ch, x) => { if (ch === '#') g.fillRect(x, y, 1, 1); }));
-    return c;
-  }
-  const IDLE = figure(LEGS.idle), WALK = [figure(LEGS.a), IDLE, figure(LEGS.b), IDLE];
-  // Walker size is per scene (SCENES[id].fig, pixels per sprite pixel), set to
-  // about the height of that scene's doors.
+  // ---------- the walker (sprite.js draws it; sized per scene by figH) ----------
+  const walker = () => window.makeWalker(S.figH);
 
   // ---------- ambient life, drawn on a 3px grid to sit in the art's pixels ----------
   const rand = (a, b) => a + Math.random() * (b - a);
@@ -343,12 +329,12 @@
     } else if (mode === 'talk' || mode === 'game') fa = 0;
     const drawWalker = () => {
       if (fa <= 0) return;
-      const moving = target != null || keys.l || keys.r || anim;
-      const spr = moving ? WALK[((walkT / 0.11) | 0) % 4] : IDLE;
-      const fw = 8 * S.fig * fs, fh = 16 * S.fig * fs, x = Math.round(fx - fw / 2), y = feet - fh;
+      const moving = target != null || keys.l || keys.r || anim, W = walker();
+      const spr = moving ? W.walk[((walkT / 0.09) | 0) % 8] : W.idle[((t / 0.7) | 0) % 2];
+      const k = W.px * fs, fw = spr.width * k, fh = spr.height * k, x = Math.round(fx - fw / 2), y = Math.round(feet - fh + W.footPad * k);
       g.save(); g.globalAlpha = fa;
       if (clip) { g.beginPath(); g.rect(...clip); g.clip(); }
-      if (!anim) { g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(fx, feet, fw * 0.45, 10, 0, 0, Math.PI * 2); g.fill(); }
+      if (!anim) { g.fillStyle = 'rgba(0,0,0,.3)'; g.beginPath(); g.ellipse(fx, feet, fw * 0.42, 8, 0, 0, Math.PI * 2); g.fill(); }
       if (anim) g.filter = `brightness(${1 - 0.5 * (1 - fa)})`;
       g.imageSmoothingEnabled = false;
       if (face > 0) g.drawImage(spr, x, y, fw, fh);
