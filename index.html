@@ -57,6 +57,7 @@
   .body { text-align: justify; hyphens: auto; }
   .lead .body > p:first-child::first-letter { float: left; font: 700 64px/.8 var(--serif); padding: 6px 6px 0 0; }
   figure { margin: 0 0 12px; }
+  figure img { width: 100%; }
   figcaption { font: 400 11.5px/1.4 var(--sans); color: var(--muted); margin-top: 5px; }
   figcaption .credit { display: block; text-transform: uppercase; font-size: 9.5px; letter-spacing: .06em; margin-top: 2px; }
   [data-mode="paper"] figure img { filter: grayscale(1) contrast(1.12); mix-blend-mode: multiply; }
@@ -219,7 +220,7 @@
     <span>C <span class="up">▲ 2</span></span>
     <span>VBA <span class="up">▲ 1</span></span>
     <!-- counts updated by hand: gh repo list vincal848 --visibility public -->
-    <span>PUBLIC REPOS <span class="up">▲ 19</span></span>
+    <span>PUBLIC REPOS <span class="up">▲ 20</span></span>
   </div>
 
   <nav>
@@ -240,7 +241,7 @@
     <aside class="whatsnews">
       <h2>What's News</h2>
       <ul>
-        <li><strong>Power markets:</strong> Joint day-ahead/real-time price scenarios now feed TCC and DART pricers. Neither beats its baseline yet; the DART test runs forward on live data.</li>
+        <li><strong>Power markets:</strong> Joint day-ahead/real-time price scenarios now feed TCC and DART pricers. Neither beats its baseline; the forward DART test is set up but not yet running.</li>
         <li><strong>Microstructure:</strong> A DQN market maker beats Avellaneda-Stoikov on held-out seeds but only ties a fixed spread. The C matching engine now has an exchange layer and a threaded gateway.</li>
         <li><strong>Competition:</strong> In IMC Prosperity, a re-tuned market maker beats its fixed-value baseline out of sample.</li>
         <li><strong>Strategies:</strong> Volatility and ETF trading algorithms are in development.</li>
@@ -266,14 +267,14 @@
       <p class="dek">A market-data warehouse feeds LEAR, LightGBM and structural congestion models, all scored under time-block cross-validation.</p>
       <p class="byline">By Caleb Vinson</p>
       <figure>
-        <img src="assets/nyiso-forecast.png" alt="Day-ahead forecast distribution for New York City on July 15, 2025, showing 50% and 90% intervals around the forecast mean, with the actual price peaking near $190 around 6 p.m.">
+        <picture><source srcset="assets/nyiso-forecast.png" media="(prefers-reduced-motion: reduce)"><img src="assets/nyiso-forecast.gif" alt="Animation: Day-ahead forecast distribution for New York City on July 15, 2025, showing 50% and 90% intervals around the forecast mean, with the actual price peaking near $190 around 6 p.m."></picture>
         <figcaption>Day-ahead forecast for N.Y.C. on July 15, 2025. The shaded bands are the 50% and 90% intervals; the dashed line is what the price actually did.<span class="credit">nyiso-grid dashboard</span></figcaption>
       </figure>
       <div class="body">
         <p>Electricity prices in New York move with load, weather and transmission congestion, and those forces change from one hour to the next. The nyiso-grid project collects five years of NYISO market data into a DuckDB warehouse. On top of it sit locational marginal price forecasts that give a full distribution instead of a single point estimate.</p>
         <p>The models are a LEAR regression, LightGBM, and a structural congestion model, each tested on time-block cross-validation so that no future data leaks into training.</p>
         <p class="pull">“A forecast that only gives one number can't tell you how wrong it might be.”</p>
-        <p>Overfitting diagnostics are part of the pipeline, not an afterthought. A dashboard is included. Joint DA/RT scenarios now feed TCC and DART pricers; neither beats its baseline yet, so the DART pricer is being tested forward on live data.</p>
+        <p>Overfitting diagnostics are part of the pipeline, not an afterthought. A dashboard is included. On a year of held-out data, the forecast's error is 16% (day-ahead) and 26% (real-time) below yesterday's price. The TCC pricer found no edge over the auction price, and all three DART candidates lose after fees on validation. The forward DART test needs 365 settled days and has not started accruing them.</p>
         <p class="jump"><a href="#grid-feature">Map of the constraints, A2 →</a></p>
       </div>
       <p class="stack">Python · DuckDB · LightGBM</p>
@@ -284,7 +285,7 @@
         <p class="kicker">Systematic Trading</p>
         <h3 class="hed"><a href="https://github.com/vincal848/regime-trader">An HMM Reads the Regime, Then Trades SPY Hourly</a></h3>
         <figure>
-          <img src="assets/regime-equity.png" alt="Walk-forward growth of $1: buy-and-hold SPY rises to about 1.32 while the regime trader drifts to about 0.95, with HMM states shaded behind.">
+          <picture><source srcset="assets/regime-equity.png" media="(prefers-reduced-motion: reduce)"><img src="assets/regime-equity.gif" alt="Animation: Walk-forward growth of $1: buy-and-hold SPY rises to about 1.32 while the regime trader drifts to about 0.95, with HMM states shaded behind."></picture>
           <figcaption>Walk-forward on demo data. So far, buy-and-hold is ahead.<span class="credit">regime-trader</span></figcaption>
         </figure>
         <p>Paper-traded on IBKR, with forward-filtered states, per-regime playbooks and hard risk limits in code.</p>
@@ -308,7 +309,7 @@
   <!-- ================= A2 FEATURE ================= -->
   <section id="grid-feature" class="feature">
     <figure>
-      <img src="assets/nyiso-structure.png" alt="nyiso-grid dashboard: a map of New York shaded by shift factor for the Central East constraint, a table of the top ten binding constraints, a constraint co-binding network graph and a month-over-month structural drift chart.">
+      <picture><source srcset="assets/nyiso-structure.png" media="(prefers-reduced-motion: reduce)"><img src="assets/nyiso-structure.gif" alt="Animation: nyiso-grid dashboard: a map of New York shaded by shift factor for the Central East constraint, a table of the top ten binding constraints, a constraint co-binding network graph and a month-over-month structural drift chart."></picture>
       <figcaption>Shift factors for the Central East interface, the ten constraints with the largest shadow prices, which constraints bind together, and how much that structure drifts month to month.<span class="credit">nyiso-grid dashboard</span></figcaption>
     </figure>
     <div>
@@ -332,7 +333,7 @@
       <article>
         <p class="kicker">Competition</p>
         <h4 class="hed"><a href="https://github.com/vincal848/imc-prosperity-market-making">A Market Maker That Beats Its Baseline, and a Product Where Nothing Can</a></h4>
-        <p>On the mean-reverting product, a re-tuned market maker beats its fixed-value baseline on unseen days under two fill models. On the trending one, holding the 80-unit limit is the ceiling.</p>
+        <p>On the mean-reverting product, a re-tuned market maker beats its fixed-value baseline on unseen days under two fill models. On the trending one, holding the 80-unit limit is the ceiling. It is a bet on mean reversion: on a random-walk version it loses, and a guard built to stop that cuts the loss but misses its own target.</p>
         <p class="stack">Python</p>
       </article>
       <article>
@@ -343,9 +344,9 @@
       </article>
       <article>
         <p class="kicker">Commodities</p>
-        <h4 class="hed"><a href="https://github.com/vincal848/oil-price-prediction">Neural Nets Lose to Yesterday's Oil Price</a></h4>
-        <p>An LSTM and an echo state network forecast WTI one step ahead, and naive persistence beats both. So do ridge return models, on two pre-registered holdouts.</p>
-        <p class="stack">Python · TensorFlow</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/oil-price-prediction">An Energy Book That Earns in Crashes, and Bleeds in Grinds</a></h4>
+        <p>Carry, curve and trend across six energy futures and three crack strips: 11.6% a year and a 0.79 Sharpe since 2003, net of costs, but −31% from mid-2022 to 2025. The formal WTI test fails three of its kill criteria, and nothing forecasts the price better than yesterday's.</p>
+        <p class="stack">Python · pandas</p>
       </article>
       <article>
         <p class="kicker">Sports</p>
@@ -356,6 +357,10 @@
       <article>
         <p class="kicker">ESG</p>
         <h4 class="hed"><a href="https://github.com/vincal848/esg-imaging">Can Satellites See ESG Before the Ratings Do?</a></h4>
+        <figure>
+          <picture><source srcset="assets/esg-forest.png" media="(prefers-reduced-motion: reduce)"><img src="assets/esg-forest.gif" alt="Animation: satellite tree-cover loss around one EPA-reporting facility in northeast Florida building up year by year from 2001 to 2024, yellow for early years and red for recent ones. By 2024, 39% of the area within 2 km has lost tree cover, against 34% in the 2 to 10 km ring."></picture>
+          <figcaption>Tree-cover loss around one GHGRP facility in northeast Florida, 2001–2024: the 2 km buffer against the 2–10 km ring, the comparison the tests make. Data: Hansen et al. 2013, Global Forest Change v1.12, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<span class="credit">esg-imaging</span></figcaption>
+        </figure>
         <p>Forest loss around 2,557 EPA-reporting facilities shows no lead over enforcement actions in two pre-registered tests. Flaring and ratings need licensed data.</p>
         <p class="stack">Python</p>
       </article>
@@ -377,6 +382,9 @@
         <tr><td><a href="https://github.com/vincal848/lob-engine-c">lob-engine-c</a></td><td>C matching engine replay</td><td>LOBSTER order book snapshots</td><td class="v up">▲ Matched</td><td class="hide-sm">0 of 1.07M rows mismatched, AAPL and MSFT</td></tr>
         <tr><td><a href="https://github.com/vincal848/game-theory-equilibria">game-theory-equilibria</a></td><td>Equilibrium solvers</td><td>Gibbons' examples</td><td class="v up">▲ Matched</td><td class="hide-sm">Textbook answers reproduced</td></tr>
         <tr><td><a href="https://github.com/vincal848/oil-price-prediction">oil-price-prediction</a></td><td>LSTM, echo state network</td><td>Naive persistence</td><td class="v down">▼ Lost</td><td class="hide-sm">Persistence also beats ridge return models on two holdouts</td></tr>
+        <tr><td><a href="https://github.com/vincal848/oil-price-prediction">oil-price-prediction</a></td><td>Carry-momentum, WTI outright</td><td>7 pre-registered kill criteria</td><td class="v down">▼ Failed 3</td><td class="hide-sm">Net Sharpe 0.44, deflated 0.37</td></tr>
+        <tr><td><a href="https://github.com/vincal848/quantum-portfolio">quantum-portfolio</a></td><td>XY-mixer QAOA</td><td>Random valid portfolio</td><td class="v up">▲ Beat</td><td class="hide-sm">24–50× on 5 of 6 models</td></tr>
+        <tr><td><a href="https://github.com/vincal848/quantum-portfolio">quantum-portfolio</a></td><td>Standard QAOA</td><td>Random valid portfolio</td><td class="v down">▼ Lost</td><td class="hide-sm">0.28–1.01×; annealing finds every optimum</td></tr>
         <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Re-tuned MM (Ash)</td><td>Fixed-value MM</td><td class="v up">▲ Beat</td><td class="hide-sm">Unseen days, both fill models</td></tr>
         <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Trend-aware MM (Pepper)</td><td>Hold to the 80-unit limit</td><td class="v down">▼ Lost</td><td class="hide-sm">Holding the limit is the ceiling</td></tr>
         <tr><td><a href="https://github.com/vincal848/market-microstructure">market-microstructure</a></td><td>Double DQN market maker</td><td>Fixed spread</td><td class="v">● Tied</td><td class="hide-sm">Beats Avellaneda-Stoikov on held-out seeds</td></tr>
@@ -395,7 +403,7 @@
         <p class="kicker">Rates</p>
         <h4 class="hed"><a href="https://github.com/vincal848/term-structure-modeling">Four Short-Rate Models, Checked Against Closed Form</a></h4>
         <figure>
-          <img src="assets/ns-fit.png" alt="Nelson-Siegel curve fitted to Treasury yields on September 29, 2026, rising from about 4.0% at short maturities to about 5.5% at 30 years.">
+          <picture><source srcset="assets/ns-fit.png" media="(prefers-reduced-motion: reduce)"><img src="assets/ns-fit.gif" alt="Animation: Nelson-Siegel curve fitted to Treasury yields on September 29, 2026, rising from about 4.0% at short maturities to about 5.5% at 30 years."></picture>
           <figcaption>Nelson-Siegel fit to the Treasury curve, Sept. 29, 2026.<span class="credit">term-structure-modeling</span></figcaption>
         </figure>
         <p>Vasicek, CIR, Hull-White and Black-Karasinski, plus a Nelson-Siegel fit to the Treasury curve.</p>
@@ -413,9 +421,9 @@
       </article>
       <article>
         <p class="kicker">Quantum</p>
-        <h4 class="hed"><a href="https://github.com/vincal848/quantum-portfolio">QAOA Picks a Portfolio</a></h4>
-        <p>Cardinality-constrained selection, benchmarked against the exact optimum and a greedy classical solver.</p>
-        <p class="stack">Python · Qiskit</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/quantum-portfolio">Seven Portfolios, Six Quantum Solvers, One Lesson</a></h4>
+        <p>Standard QAOA finds the best portfolio no more often than a random valid pick. A mixer that can't break the constraint does 24 to 50 times better. Classical annealing still solves every model in seconds.</p>
+        <p class="stack">Python · NumPy</p>
       </article>
       <article>
         <p class="kicker">Economics</p>
@@ -457,6 +465,10 @@
       <article>
         <p class="kicker">Running</p>
         <h4 class="hed"><a href="https://github.com/vincal848/pose-estimation">Running Form From a Phone Video</a></h4>
+        <figure>
+          <picture><source srcset="assets/pose-overlay.png" media="(prefers-reduced-motion: reduce)"><img src="assets/pose-overlay.gif" alt="Animation: a runner on a treadmill seen from the side, with MediaPipe's shoulder, arm, hip, knee, ankle and foot landmarks drawn over him frame by frame, left side in orange and right side in blue."></picture>
+          <figcaption>MediaPipe landmarks on a treadmill clip at 3.0 m/s. Video: Arellano et al. 2015, PLOS ONE, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>; skeleton added.<span class="credit">pose-estimation</span></figcaption>
+        </figure>
         <p>MediaPipe pose landmarks turned into cadence, ground contact time and oscillation. Cadence matches a hand count within 0.5 steps per minute on the clip it was tuned on; a held-out clip is still needed.</p>
         <p class="stack">Python</p>
       </article>
@@ -469,7 +481,8 @@
       <article class="box upcoming">
         <h2>Coming Up</h2>
         <ul>
-          <li>nyiso-grid: a year of forward DART paper trading</li>
+          <li>nyiso-grid: restart the daily job toward 365 forward DART days</li>
+          <li>predictions: SIG Predictions Cup (midterm elections); market data puller built, pricing to come</li>
           <li>cfb-modeling: forward-logged 2026 Kalshi ladders and wind forecasts</li>
           <li>pose-estimation: a held-out running clip</li>
         </ul>
@@ -541,7 +554,7 @@
           <h2>Skills &amp; Coursework</h2>
           <table class="facts">
             <tr><th>Languages</th><td>Python, R, C, C++, SQL, VBA</td></tr>
-            <tr><th>Libraries</th><td>NumPy, pandas, SciPy, statsmodels, LightGBM, PyTorch, TensorFlow, Qiskit</td></tr>
+            <tr><th>Libraries</th><td>NumPy, pandas, SciPy, statsmodels, LightGBM, PyTorch, TensorFlow</td></tr>
             <tr><th>Data</th><td>DuckDB, Nasdaq ITCH, NYISO, CRSP/WRDS, IBKR API</td></tr>
           </table>
         </div>
