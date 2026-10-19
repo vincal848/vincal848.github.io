@@ -100,6 +100,11 @@
   .grid article:nth-child(3n) { padding-right: 0; }
   .grid article:not(:nth-child(3n+1)) { border-left: 1px solid var(--hair); }
   .grid p { font-size: 14.5px; }
+  .grid.four { grid-template-columns: repeat(4, 1fr); }
+  .four article { padding: 0 16px 16px !important; border-left: 1px solid var(--hair); }
+  .four article:first-child { padding-left: 0 !important; border-left: 0; }
+  .four article:last-child { padding-right: 0 !important; }
+  .portrait.city { aspect-ratio: 3 / 2; max-width: none; margin-bottom: 8px; padding: 0; text-decoration: none; text-transform: uppercase; letter-spacing: .08em; }
   /* empty slot for a future project: replace it with a copy of any <article> */
   .slot { color: var(--muted); font-style: italic; font-size: 14px; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 110px; border: 1px dashed var(--hair) !important; }
 
@@ -182,6 +187,7 @@
     .front > *, .about > * { border-left: 0 !important; padding: 0 !important; margin-bottom: 20px; }
     .portrait { max-width: 240px; }
     .grid { grid-template-columns: 1fr; }
+    .grid.four { grid-template-columns: repeat(2, 1fr); gap: 0 14px; }
     .grid article { padding: 0 0 14px !important; border-left: 0 !important; border-bottom: 1px solid var(--hair); margin-bottom: 14px; }
     .lead .body { column-count: 1; }
     .edition span:first-child, .edition span:last-child { display: none; }
@@ -227,6 +233,7 @@
     <a href="#tools">Tools</a>
     <a href="#careers">Experience</a>
     <a href="#research">Research</a>
+    <a href="#datelines">Datelines</a>
     <a href="#about">About</a>
     <a href="mailto:calebjvinson848@gmail.com">Contact</a>
   </nav>
@@ -250,7 +257,8 @@
         <div><a href="#tools">Tools &amp; Other</a><span>D1</span></div>
         <div><a href="#careers">Experience &amp; Education</a><span>E1</span></div>
         <div><a href="#research">Research &amp; Writing</a><span>E2</span></div>
-        <div><a href="#about">About the Author</a><span>E3</span></div>
+        <div><a href="#datelines">Datelines</a><span>E3</span></div>
+        <div><a href="#about">About the Author</a><span>E4</span></div>
       </div>
     </aside>
 
@@ -509,11 +517,45 @@
     </div>
   </section>
 
-  <!-- ================= E3 ABOUT THE AUTHOR =================
+  <!-- ================= E3 DATELINES =================
+       Photo: save assets/houston.jpg, lubbock.jpg, pittsburgh.jpg or nyc.jpg
+       (landscape, about 3:2) and it appears automatically. Point each href at
+       the page you want; they link to sections of this page for now. -->
+  <section id="datelines" class="desk">
+    <h2>Datelines <small>E3</small></h2>
+    <div class="grid four">
+      <article>
+        <p class="kicker">Houston</p>
+        <a class="portrait city" href="#careers"><span>Photo: Houston</span><img src="assets/houston.jpg" alt="Houston" onerror="this.remove()"></a>
+        <h4 class="hed"><a href="#careers">Where Gas Production Becomes a Trade</a></h4>
+        <p>Summer 2026 on Mercuria Energy's systematic natural gas desk, turning basin-level production forecasts into Henry Hub futures trades.</p>
+      </article>
+      <article>
+        <p class="kicker">Lubbock</p>
+        <a class="portrait city" href="#careers"><span>Photo: Lubbock</span><img src="assets/lubbock.jpg" alt="Lubbock" onerror="this.remove()"></a>
+        <h4 class="hed"><a href="#careers">Economics, Math and a Ph.D. Stochastic Calculus Class</a></h4>
+        <p>Texas Tech, through May 2025: economics and mathematics, actuarial science, an undergraduate thesis and research on college athletes' NIL deals.</p>
+      </article>
+      <article>
+        <p class="kicker">Pittsburgh</p>
+        <a class="portrait city" href="#careers"><span>Photo: Pittsburgh</span><img src="assets/pittsburgh.jpg" alt="Pittsburgh" onerror="this.remove()"></a>
+        <h4 class="hed"><a href="#careers">Computational Finance at Carnegie Mellon</a></h4>
+        <p>The MSCF program at the Tepper School of Business, finishing in December 2026, with trading competitions on the side.</p>
+      </article>
+      <article>
+        <p class="kicker">New York</p>
+        <a class="portrait city" href="#front"><span>Photo: New York</span><img src="assets/nyc.jpg" alt="New York" onerror="this.remove()"></a>
+        <h4 class="hed"><a href="#front">Five Years of the New York Grid</a></h4>
+        <p>Every hour of NYISO prices since 2021, forecast as a distribution and mapped constraint by constraint.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= E4 ABOUT THE AUTHOR =================
        Bio photo: save a portrait as assets/bio.jpg and it appears automatically.
        Fill in the .fill placeholders below. -->
   <section id="about" class="desk">
-    <h2>About the Author <small>E3</small></h2>
+    <h2>About the Author <small>E4</small></h2>
     <div class="about">
       <div>
         <figure>
@@ -553,7 +595,7 @@
 
   <footer>
     <span>© 2026 Caleb Vinson</span>
-    <span>A Front · B Markets · C Pricing · D Tools · E Experience, Research &amp; About</span>
+    <span>A Front · B Markets · C Pricing · D Tools · E Experience, Research, Datelines &amp; About</span>
     <span><a href="https://github.com/vincal848">GitHub</a> · <a href="https://www.linkedin.com/in/calebjvinson/">LinkedIn</a> · <a href="mailto:calebjvinson848@gmail.com">Email</a></span>
   </footer>
 </div>
