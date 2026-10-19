@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Caleb Vinson · The Daily Spread</title>
 <meta name="description" content="Caleb Vinson: MS Computational Finance at Carnegie Mellon. Systematic trading, derivatives pricing, power markets, market microstructure.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b23a12'/><text x='16' y='22' font-size='16' font-family='Georgia,serif' fill='%23fff' text-anchor='middle'>CV</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231a1a1a'/><text x='16' y='22' font-size='16' font-family='Georgia,serif' fill='%23fff' text-anchor='middle'>CV</text></svg>">
 <!-- Link previews. These are the only absolute URLs on the site: change this domain if the site moves. -->
 <link rel="canonical" href="https://vincal848.github.io/">
 <meta property="og:type" content="website">
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,900;1,700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f7f6f2; --ink: #1a1a1a; --muted: #555; --rule: #1a1a1a; --hair: #c8c6c0; --accent: #b23a12; --up: #1d7a3a; --down: #a8261b;
+    --bg: #f7f6f2; --ink: #1a1a1a; --muted: #555; --rule: #1a1a1a; --hair: #c8c6c0; --accent: #1a1a1a; --up: #1d7a3a; --down: #a8261b;
     --serif: "Libre Caslon Text", Georgia, serif; --sans: Inter, system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
@@ -60,7 +60,6 @@
   figure img { width: 100%; }
   figcaption { font: 400 11.5px/1.4 var(--sans); color: var(--muted); margin-top: 5px; }
   figcaption .credit { display: block; text-transform: uppercase; font-size: 9.5px; letter-spacing: .06em; margin-top: 2px; }
-  [data-mode="paper"] figure img { filter: grayscale(1) contrast(1.12); mix-blend-mode: multiply; }
   /* ---------- spot colour (paper only, front page) ---------- */
   [data-mode="paper"] .whatsnews > h2 { background: var(--accent); color: #fff; border: 0; padding: 5px 8px; }
   [data-mode="paper"] .lead .body > p:first-child::first-letter { color: var(--accent); }
@@ -104,16 +103,14 @@
   /* empty slot for a future project: replace it with a copy of any <article> */
   .slot { color: var(--muted); font-style: italic; font-size: 14px; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 110px; border: 1px dashed var(--hair) !important; }
 
-  /* scorecard table */
+  /* data tables */
   table.data { width: 100%; border-collapse: collapse; font: 400 13px/1.35 var(--sans); }
   .data caption { text-align: left; font: 700 13px var(--sans); text-transform: uppercase; letter-spacing: .07em; border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 6px 0; margin-bottom: 4px; }
   .data th { text-align: left; font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--rule); padding: 5px 8px 5px 0; }
   .data td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
   .data tr:nth-child(even) td { background: rgba(0,0,0,.03); }
-  .data .v { font-weight: 700; white-space: nowrap; }
   .tablenote { font: 400 11px var(--sans); color: var(--muted); margin-top: 6px; }
 
-  .upcoming ul { margin: 0; padding-left: 18px; font-size: 14px; }
 
   /* ---------- about the author ---------- */
   .about { display: grid; grid-template-columns: 220px 1.6fr 1fr; gap: 0; }
@@ -206,7 +203,7 @@
   <header class="masthead">
     <div class="ear"><b>Inside</b>Five years of New York grid prices, forecast as a distribution. A1</div>
     <div><h1>The Daily Spread</h1><p class="editor">Caleb Vinson, Editor</p></div>
-    <div class="ear r"><b>Benchmarks</b>Where the naive baseline won, and where it didn't. B2</div>
+    <div class="ear r"><b>Experience</b>Summer 2026 on a systematic gas desk at Mercuria Energy. E1</div>
   </header>
   <div class="edition">
     <span>Vol. I · No. 1</span>
@@ -226,10 +223,9 @@
   <nav>
     <a href="#front">Front Page</a>
     <a href="#markets">Markets</a>
-    <a href="#scorecard">Scorecard</a>
     <a href="#pricing">Pricing &amp; Models</a>
     <a href="#tools">Tools</a>
-    <a href="#careers">Careers</a>
+    <a href="#careers">Experience</a>
     <a href="#research">Research</a>
     <a href="#about">About</a>
     <a href="mailto:calebjvinson848@gmail.com">Contact</a>
@@ -241,21 +237,18 @@
     <aside class="whatsnews">
       <h2>What's News</h2>
       <ul>
-        <li><strong>Power markets:</strong> Joint day-ahead/real-time price scenarios now feed TCC and DART pricers. Neither beats its baseline; the forward DART test is set up but not yet running.</li>
-        <li><strong>Microstructure:</strong> A DQN market maker beats Avellaneda-Stoikov on held-out seeds but only ties a fixed spread. The C matching engine now has an exchange layer and a threaded gateway.</li>
-        <li><strong>Competition:</strong> In IMC Prosperity, a re-tuned market maker beats its fixed-value baseline out of sample.</li>
-        <li><strong>Strategies:</strong> Volatility and ETF trading algorithms are in development.</li>
-        <li><strong>Education:</strong> MS in Computational Finance, Carnegie Mellon University.</li>
+        <li><strong>Energy:</strong> Spent summer 2026 at Mercuria Energy in Houston, trading Henry Hub futures on in-house gas production forecasts. E1</li>
+        <li><strong>Competitions:</strong> Top 5% globally in IMC Prosperity; top 10 in volatility and top quartile in ETF trading of 160 at the CMU MSCF Trading Competition.</li>
+        <li><strong>Education:</strong> MS in Computational Finance, Carnegie Mellon University, finishing December 2026.</li>
       </ul>
       <div class="box index">
         <h2>In This Issue</h2>
         <div><a href="#front">Front Page</a><span>A1</span></div>
         <div><a href="#grid-feature">The Grid, Mapped</a><span>A2</span></div>
         <div><a href="#markets">Markets &amp; Trading</a><span>B1</span></div>
-        <div><a href="#scorecard">Benchmark Scorecard</a><span>B2</span></div>
         <div><a href="#pricing">Pricing &amp; Models</a><span>C1</span></div>
         <div><a href="#tools">Tools &amp; Other</a><span>D1</span></div>
-        <div><a href="#careers">Careers &amp; Education</a><span>E1</span></div>
+        <div><a href="#careers">Experience &amp; Education</a><span>E1</span></div>
         <div><a href="#research">Research &amp; Writing</a><span>E2</span></div>
         <div><a href="#about">About the Author</a><span>E3</span></div>
       </div>
@@ -364,36 +357,13 @@
         <p>Forest loss around 2,557 EPA-reporting facilities shows no lead over enforcement actions in two pre-registered tests. Flaring and ratings need licensed data.</p>
         <p class="stack">Python</p>
       </article>
-      <article class="slot">Space reserved for the next project</article>
+      <article>
+        <p class="kicker">Prediction Markets</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/predictions">Pricing the Midterms</a></h4>
+        <p>A rate-limited API client and order-book puller for the SIG Predictions Cup on the 2026 midterm elections. Pricing logic comes next.</p>
+        <p class="stack">Python</p>
+      </article>
     </div>
-  </section>
-
-  <!-- ================= B2 SCORECARD ================= -->
-  <section id="scorecard" class="desk">
-    <table class="data">
-      <caption>Benchmark Scorecard · B2</caption>
-      <thead>
-        <tr><th>Project</th><th>Model</th><th>Benchmark</th><th>Result</th><th class="hide-sm">Note</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><a href="https://github.com/vincal848/monte-carlo-options-multilang">monte-carlo-options-multilang</a></td><td>MC with antithetic variates</td><td>Black-Scholes</td><td class="v up">▲ Matched</td><td class="hide-sm">All three languages within 1.3 SE</td></tr>
-        <tr><td><a href="https://github.com/vincal848/options-pricing">options-pricing</a></td><td>CRR tree, Crank-Nicolson</td><td>Black-Scholes</td><td class="v up">▲ Matched</td><td class="hide-sm">Three methods cross-validated</td></tr>
-        <tr><td><a href="https://github.com/vincal848/term-structure-modeling">term-structure-modeling</a></td><td>Four short-rate models</td><td>Closed-form bond prices</td><td class="v up">▲ Matched</td><td class="hide-sm">Vasicek, CIR, HW, BK</td></tr>
-        <tr><td><a href="https://github.com/vincal848/lob-engine-c">lob-engine-c</a></td><td>C matching engine replay</td><td>LOBSTER order book snapshots</td><td class="v up">▲ Matched</td><td class="hide-sm">0 of 1.07M rows mismatched, AAPL and MSFT</td></tr>
-        <tr><td><a href="https://github.com/vincal848/game-theory-equilibria">game-theory-equilibria</a></td><td>Equilibrium solvers</td><td>Gibbons' examples</td><td class="v up">▲ Matched</td><td class="hide-sm">Textbook answers reproduced</td></tr>
-        <tr><td><a href="https://github.com/vincal848/oil-price-prediction">oil-price-prediction</a></td><td>LSTM, echo state network</td><td>Naive persistence</td><td class="v down">▼ Lost</td><td class="hide-sm">Persistence also beats ridge return models on two holdouts</td></tr>
-        <tr><td><a href="https://github.com/vincal848/oil-price-prediction">oil-price-prediction</a></td><td>Carry-momentum, WTI outright</td><td>7 pre-registered kill criteria</td><td class="v down">▼ Failed 3</td><td class="hide-sm">Net Sharpe 0.44, deflated 0.37</td></tr>
-        <tr><td><a href="https://github.com/vincal848/quantum-portfolio">quantum-portfolio</a></td><td>XY-mixer QAOA</td><td>Random valid portfolio</td><td class="v up">▲ Beat</td><td class="hide-sm">24–50× on 5 of 6 models</td></tr>
-        <tr><td><a href="https://github.com/vincal848/quantum-portfolio">quantum-portfolio</a></td><td>Standard QAOA</td><td>Random valid portfolio</td><td class="v down">▼ Lost</td><td class="hide-sm">0.28–1.01×; annealing finds every optimum</td></tr>
-        <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Re-tuned MM (Ash)</td><td>Fixed-value MM</td><td class="v up">▲ Beat</td><td class="hide-sm">Unseen days, both fill models</td></tr>
-        <tr><td><a href="https://github.com/vincal848/imc-prosperity-market-making">imc-prosperity-market-making</a></td><td>Trend-aware MM (Pepper)</td><td>Hold to the 80-unit limit</td><td class="v down">▼ Lost</td><td class="hide-sm">Holding the limit is the ceiling</td></tr>
-        <tr><td><a href="https://github.com/vincal848/market-microstructure">market-microstructure</a></td><td>Double DQN market maker</td><td>Fixed spread</td><td class="v">● Tied</td><td class="hide-sm">Beats Avellaneda-Stoikov on held-out seeds</td></tr>
-        <tr><td><a href="https://github.com/vincal848/nyiso-grid">nyiso-grid</a></td><td>Structural TCC pricer</td><td>Same-season persistence</td><td class="v down">▼ No edge</td><td class="hide-sm">Walk-forward over past auctions</td></tr>
-        <tr><td><a href="https://github.com/vincal848/cfb-modeling">cfb-modeling</a></td><td>33 betting hypotheses</td><td>Closing line</td><td class="v down">▼ No edge</td><td class="hide-sm">After fees, protocols written first</td></tr>
-        <tr><td><a href="https://github.com/vincal848/regime-trader">regime-trader</a></td><td>HMM regime strategy</td><td>Buy-and-hold SPY</td><td class="v down">▼ Behind</td><td class="hide-sm">Demo walk-forward Sharpe −0.96 vs 1.08</td></tr>
-      </tbody>
-    </table>
-    <p class="tablenote">Results as reported in each repository's README. ▲ model met or beat its benchmark · ● tie · ▼ benchmark won.</p>
   </section>
 
   <section id="pricing" class="desk">
@@ -478,30 +448,40 @@
         <p>A turn-based grand strategy game. You play on a map, and the simulation plays on graphs.</p>
         <p class="stack">Python</p>
       </article>
-      <article class="box upcoming">
-        <h2>Coming Up</h2>
-        <ul>
-          <li>nyiso-grid: restart the daily job toward 365 forward DART days</li>
-          <li>predictions: SIG Predictions Cup (midterm elections); market data puller built, pricing to come</li>
-          <li>cfb-modeling: forward-logged 2026 Kalshi ladders and wind forecasts</li>
-          <li>pose-estimation: a held-out running clip</li>
-        </ul>
-      </article>
     </div>
   </section>
 
-  <!-- ================= E1 CAREERS & EDUCATION =================
-       One <tr> per entry, newest first. -->
+  <!-- ================= E1 EXPERIENCE & EDUCATION =================
+       One <article> per role, newest first; one <tr> per school. -->
   <section id="careers" class="desk">
-    <h2>Careers &amp; Education <small>E1</small></h2>
+    <h2>Experience &amp; Education <small>E1</small></h2>
+    <div class="grid">
+      <article>
+        <p class="kicker">Mercuria Energy · Houston · Summer 2026</p>
+        <h4 class="hed">Trading Gas Production Surprises Before the Vendors Report</h4>
+        <p>As a systematic and algorithmic trading intern, I forecast Lower 48 and basin-level natural gas production with a pooled random forest, to 0.4 Bcf/d out-of-sample error and about 12 hours ahead of vendor releases. The signal expanded front-month Henry Hub trading to 2.5 times the original trade days at a 1.6 Sharpe ratio.</p>
+        <p>I mapped more than 20,000 meters to their basins with geographic polygons, automated nightly retraining on weather and pipeline data for 10+ traders, and pitched the natural gas managing director as one of three on a new desk, which won capital for its first funded strategy.</p>
+        <p class="stack">Systematic &amp; Algorithmic Trading Intern</p>
+      </article>
+      <article>
+        <p class="kicker">Hilltop Holdings · Dallas · Summer 2023</p>
+        <h4 class="hed">Stress-Testing a Bank's Real-Estate Book</h4>
+        <p>Rebuilt eight CCAR stress-testing models as modular Python, and modeled loss given default and exposure at default with Markov-chain transition matrices and Monte Carlo paths across baseline, adverse and severely adverse scenarios. Backtests and sensitivity results went to senior risk leadership.</p>
+        <p class="stack">Quantitative Finance Intern</p>
+      </article>
+      <article>
+        <p class="kicker">Competitions</p>
+        <h4 class="hed">Three Trading Competitions</h4>
+        <p><strong>IMC Prosperity:</strong> top 5% globally (the market maker is under Markets). <strong>CMU MSCF Trading Competition:</strong> top 10 in volatility, top quartile in ETF trading, of 160. <strong>Jane Street:</strong> market-making competition.</p>
+      </article>
+    </div>
     <table class="data">
       <thead>
-        <tr><th>Position</th><th>Organization</th><th class="hide-sm">Detail</th></tr>
+        <tr><th>School</th><th>Degree</th><th class="hide-sm">Relevant coursework</th></tr>
       </thead>
       <tbody>
-        <tr><td>MS, Computational Finance</td><td>Carnegie Mellon University</td><td class="hide-sm">Current</td></tr>
-        <tr><td>Competitor, 2026</td><td>IMC Prosperity</td><td class="hide-sm">Market-making bots; see <a href="https://github.com/vincal848/imc-prosperity-market-making"><u>repo</u></a></td></tr>
-        <tr><td>Undergraduate</td><td>Texas Tech University</td><td class="hide-sm">Economics, finance and mathematics coursework</td></tr>
+        <tr><td>Carnegie Mellon University, Tepper School of Business</td><td>MS, Computational Finance (MSCF), Dec. 2026</td><td class="hide-sm">Machine learning, stochastic calculus, options pricing, simulation and time series, financial computing</td></tr>
+        <tr><td>Texas Tech University</td><td>B.S. Economics &amp; Mathematics (Data Science); B.G.S. Actuarial Science, Biology &amp; Chemistry, May 2025</td><td class="hide-sm">Ph.D. stochastic calculus (A+), Ph.D. high-frequency trading (audited), econometrics, time series</td></tr>
       </tbody>
     </table>
   </section>
@@ -512,9 +492,19 @@
     <h2>Research &amp; Writing <small>E2</small></h2>
     <div class="grid">
       <article>
+        <p class="kicker">Undergraduate Thesis · 2024–25</p>
+        <h4 class="hed">Picking Stocks When the Tails Have Memory</h4>
+        <p>Weighted latent root regression combined with an ARFIMA-FIGARCH model under normal-inverse-Gaussian errors, for portfolio selection when returns are heavy-tailed and volatility is long-memory, with factor Monte Carlo paths for return forecasts.</p>
+      </article>
+      <article>
+        <p class="kicker">Economics Research · Texas Tech</p>
+        <h4 class="hed">What College Athletes' NIL Deals Do to a Roster</h4>
+        <p>As an undergraduate researcher and coauthor, I estimated difference-in-differences models on more than 33,000 panel observations of name, image and likeness valuation and team construction.</p>
+      </article>
+      <article>
         <p class="kicker">Book Chapters</p>
         <h4 class="hed">Four Chapters on Sentiment Analysis From Text</h4>
-        <p>Contributed four textbook chapters on sentiment analysis using text data.</p>
+        <p>Four textbook chapters and an R/Python curriculum linking text sentiment to asset prices, built on news pipelines that refresh every five minutes.</p>
       </article>
     </div>
   </section>
@@ -538,39 +528,33 @@
         <p class="kicker">Profile</p>
         <h3 class="hed">Beat the Benchmark, or Say So</h3>
         <div class="body">
-          <p>Howdy, and thanks for reading. I'm a Master's student in Computational Finance at Carnegie Mellon University, by way of Texas. My work is in algorithmic and systematic trading, derivatives pricing, and forecasting in commodity and equity markets. Most of it is statistical modeling and simulation in Python, R and C/C++.</p>
+          <p>Howdy, and thanks for reading. I'm a Master's student in Computational Finance at Carnegie Mellon University, by way of Texas, and I spent this summer on a systematic natural gas desk. My work is in algorithmic and systematic trading, energy and power markets, derivatives pricing, and forecasting. Most of it is statistical modeling and simulation in Python, R and C/C++.</p>
           <p>Every project in this paper is measured against something: a closed form, an exact optimum, a textbook answer, or a naive baseline. When the baseline wins, the headline says so.</p>
         </div>
         <table class="facts">
-          <tr><th>Education</th><td>MS Computational Finance, Carnegie Mellon University<br>Undergraduate, Texas Tech University</td></tr>
-          <tr><th>Focus</th><td>Systematic trading, derivatives pricing, power markets, market microstructure</td></tr>
-          <tr><th>Languages</th><td>Python, R, C/C++, SQL, VBA</td></tr>
-          <tr><th>Contact</th><td><a href="mailto:calebjvinson848@gmail.com"><u>calebjvinson848@gmail.com</u></a> · <a href="https://github.com/vincal848"><u>GitHub</u></a></td></tr>
+          <tr><th>Education</th><td>MS Computational Finance, Carnegie Mellon University (Dec. 2026)<br>B.S. Economics &amp; Mathematics, Texas Tech University</td></tr>
+          <tr><th>Focus</th><td>Systematic trading, energy and power markets, derivatives pricing, market microstructure</td></tr>
+          <tr><th>Off the clock</th><td>College football, Arabic (intermediate), travel, reading, grand-strategy games</td></tr>
+          <tr><th>Contact</th><td><a href="mailto:calebjvinson848@gmail.com"><u>calebjvinson848@gmail.com</u></a> · <a href="https://www.linkedin.com/in/calebjvinson/"><u>LinkedIn</u></a> · <a href="https://github.com/vincal848"><u>GitHub</u></a></td></tr>
         </table>
-        <p class="byline" style="margin-top:14px">Contact the editor: <a href="mailto:calebjvinson848@gmail.com"><u>calebjvinson848@gmail.com</u></a> · <a href="https://github.com/vincal848"><u>GitHub</u></a></p>
       </div>
       <div class="corrections">
         <div class="box" style="margin:0 0 16px">
-          <h2>Skills &amp; Coursework</h2>
+          <h2>Skills</h2>
           <table class="facts">
-            <tr><th>Languages</th><td>Python, R, C, C++, SQL, VBA</td></tr>
+            <tr><th>Languages</th><td>Python, R, C, C++, kdb+/q, SQL, MATLAB, VBA</td></tr>
             <tr><th>Libraries</th><td>NumPy, pandas, SciPy, statsmodels, LightGBM, PyTorch, TensorFlow</td></tr>
-            <tr><th>Data</th><td>DuckDB, Nasdaq ITCH, NYISO, CRSP/WRDS, IBKR API</td></tr>
+            <tr><th>Data</th><td>DuckDB, Parquet, Nasdaq ITCH, NYISO, CRSP/WRDS, LSEG Datastream, IBKR API</td></tr>
           </table>
         </div>
-        <p class="kicker">Corrections &amp; Amplifications</p>
-        <p>An LSTM forecasting WTI crude did not beat naive persistence. Neither did the echo state network. (<a href="https://github.com/vincal848/oil-price-prediction"><u>oil-price-prediction</u></a>)</p>
-        <p>The Monte Carlo README said the original drift error was 55 standard errors. At the original 10,000 paths it is 6 to 9. (<a href="https://github.com/vincal848/monte-carlo-options-multilang"><u>monte-carlo-options-multilang</u></a>)</p>
-        <p>The original IMC buy-and-hold baseline bought only 9 units, not the 80-unit limit, and the backtester let quotes fill against trades the trader had just seen. Both are fixed; on the trending product, holding the limit still wins. (<a href="https://github.com/vincal848/imc-prosperity-market-making"><u>imc-prosperity-market-making</u></a>)</p>
-        <p>The regime trader's walk-forward on demo data trails buy-and-hold SPY. It does not yet pass its own backtest gates. (<a href="https://github.com/vincal848/regime-trader"><u>regime-trader</u></a>)</p>
       </div>
     </div>
   </section>
 
   <footer>
     <span>© 2026 Caleb Vinson</span>
-    <span>A Front · B Markets · C Pricing · D Tools · E Careers, Research &amp; About</span>
-    <span><a href="https://github.com/vincal848">GitHub</a> · <a href="mailto:calebjvinson848@gmail.com">Email</a></span>
+    <span>A Front · B Markets · C Pricing · D Tools · E Experience, Research &amp; About</span>
+    <span><a href="https://github.com/vincal848">GitHub</a> · <a href="https://www.linkedin.com/in/calebjvinson/">LinkedIn</a> · <a href="mailto:calebjvinson848@gmail.com">Email</a></span>
   </footer>
 </div>
 
