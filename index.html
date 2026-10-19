@@ -105,6 +105,8 @@
   .four article:first-child { padding-left: 0 !important; border-left: 0; }
   .four article:last-child { padding-right: 0 !important; }
   .portrait.city { aspect-ratio: 3 / 2; max-width: none; margin-bottom: 8px; padding: 0; text-decoration: none; text-transform: uppercase; letter-spacing: .08em; }
+  .portrait .scene-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .play-badge { position: absolute; right: 6px; bottom: 6px; background: rgba(14,10,20,.85); color: #fff; font: 700 11px/1 var(--sans); padding: 5px 8px; border-radius: 3px; letter-spacing: .04em; text-transform: none; }
   /* empty slot for a future project: replace it with a copy of any <article> */
   .slot { color: var(--muted); font-style: italic; font-size: 14px; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 110px; border: 1px dashed var(--hair) !important; }
 
@@ -518,35 +520,34 @@
   </section>
 
   <!-- ================= E3 DATELINES =================
-       Photo: save assets/houston.jpg, lubbock.jpg, pittsburgh.jpg or nyc.jpg
-       (landscape, about 3:2) and it appears automatically. Point each href at
-       the page you want; they link to sections of this page for now. -->
+       Each slot opens a walkable scene (scene.js; art in assets/scenes/<city>/).
+       Without JavaScript the slot is a plain link to the section in href. -->
   <section id="datelines" class="desk">
     <h2>Datelines <small>E3</small></h2>
     <div class="grid four">
       <article>
         <p class="kicker">Houston</p>
-        <a class="portrait city" href="#careers"><span>Photo: Houston</span><img src="assets/houston.jpg" alt="Houston" onerror="this.remove()"></a>
+        <a class="portrait city" href="#careers" data-scene="houston"><img class="scene-thumb" src="assets/scenes/houston/thumb.webp" alt="Houston: a side-on street scene" loading="lazy"><span class="play-badge">▶ Walk in</span></a>
         <h4 class="hed"><a href="#careers">Where Gas Production Becomes a Trade</a></h4>
         <p>Summer 2026 on Mercuria Energy's systematic natural gas desk, turning basin-level production forecasts into Henry Hub futures trades.</p>
       </article>
       <article>
         <p class="kicker">Lubbock</p>
-        <a class="portrait city" href="#careers"><span>Photo: Lubbock</span><img src="assets/lubbock.jpg" alt="Lubbock" onerror="this.remove()"></a>
+        <a class="portrait city" href="#careers" data-scene="west-texas"><img class="scene-thumb" src="assets/scenes/west-texas/thumb.webp" alt="Lubbock: a side-on street scene" loading="lazy"><span class="play-badge">▶ Walk in</span></a>
         <h4 class="hed"><a href="#careers">Economics, Math and a Ph.D. Stochastic Calculus Class</a></h4>
         <p>Texas Tech, through May 2025: economics and mathematics, actuarial science, an undergraduate thesis and research on college athletes' NIL deals.</p>
       </article>
       <article>
         <p class="kicker">Pittsburgh</p>
-        <a class="portrait city" href="#careers"><span>Photo: Pittsburgh</span><img src="assets/pittsburgh.jpg" alt="Pittsburgh" onerror="this.remove()"></a>
+        <a class="portrait city" href="#careers" data-scene="pittsburgh"><img class="scene-thumb" src="assets/scenes/pittsburgh/thumb.webp" alt="Pittsburgh: a side-on street scene" loading="lazy"><span class="play-badge">▶ Walk in</span></a>
         <h4 class="hed"><a href="#careers">Computational Finance at Carnegie Mellon</a></h4>
         <p>The MSCF program at the Tepper School of Business, finishing in December 2026, with trading competitions on the side.</p>
       </article>
       <article>
-        <p class="kicker">New York</p>
-        <a class="portrait city" href="#front"><span>Photo: New York</span><img src="assets/nyc.jpg" alt="New York" onerror="this.remove()"></a>
-        <h4 class="hed"><a href="#front">Five Years of the New York Grid</a></h4>
-        <p>Every hour of NYISO prices since 2021, forecast as a distribution and mapped constraint by constraint.</p>
+        <p class="kicker">Chicago</p>
+        <a class="portrait city" href="#markets" data-scene="the-city"><img class="scene-thumb" src="assets/scenes/the-city/thumb.webp" alt="Chicago: a side-on street scene in the rain" loading="lazy"><span class="play-badge">▶ Walk in</span></a>
+        <h4 class="hed"><a href="#markets">A Trading Town in the Rain</a></h4>
+        <p>Order books and a matching engine, the writing, and what comes next.</p>
       </article>
     </div>
   </section>
@@ -613,5 +614,6 @@
   try { setMode(localStorage.getItem('mode') || 'paper'); } catch (e) { setMode('paper'); }
   btn.onclick = () => setMode(root.dataset.mode === 'paper' ? 'site' : 'paper');
 </script>
+<script src="scene.js" defer></script>
 </body>
 </html>
