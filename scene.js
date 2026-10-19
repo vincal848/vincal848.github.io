@@ -8,7 +8,7 @@
   const slots = document.querySelectorAll('[data-scene]');
   if (!slots.length || typeof HTMLDialogElement !== 'function') return;
 
-  const SW = 1672, SH = 941, SPEED = 430, STEP_IN = 0.75;
+  const SW = 1672, SH = 941, SPEED = 430;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const touch = matchMedia('(pointer: coarse)').matches;
 
@@ -18,9 +18,9 @@
       layers: ['background', 'main', 'foreground'],
       life: { birds: { y: [40, 140], x: [650, 1350] }, leaves: { colors: ['#9bb04a', '#c9a63a', '#6f8a35'], x: [0, 560], y: [120, 260] } },
       doors: [
-        { x: 1429, y: 460, w: 80, h: 253, card: 'desk' },
-        { x: 891, y: 533, w: 80, h: 184, game: 'spreads' },
-        { x: 540, y: 515, w: 82, h: 200, card: 'energy' }, // the cafe
+        { x: 1429, y: 460, w: 80, h: 253, card: 'desk', path: { base: 714 } },
+        { x: 891, y: 533, w: 80, h: 184, game: 'spreads', path: { base: 718 } },
+        { x: 540, y: 515, w: 82, h: 200, card: 'energy', path: { base: 716 } }, // the cafe
       ],
     },
     'west-texas': {
@@ -28,9 +28,9 @@
       layers: ['background', 'main', 'foreground'],
       life: { birds: { y: [60, 220], x: [600, 1500] }, dust: true, tumbleweed: { y: 752 }, leaves: { colors: ['#b9862f', '#8a7a2c'], x: [0, 700], y: [60, 250], rate: 0.5 } },
       doors: [
-        { x: 169, y: 453, w: 98, h: 220, card: 'ttu' },
-        { x: 873, y: 460, w: 104, h: 227, card: 'football' },
-        { x: 1505, y: 440, w: 150, h: 253, card: 'workshop' }, // the barn's open bay
+        { x: 169, y: 453, w: 98, h: 220, card: 'ttu', path: { base: 716, steps: [702, 689, 676] } },
+        { x: 873, y: 460, w: 104, h: 227, card: 'football', path: { base: 710, steps: [698, 687] } },
+        { x: 1505, y: 440, w: 150, h: 253, card: 'workshop', path: { base: 697 } }, // the barn's open bay
       ],
     },
     pittsburgh: {
@@ -38,9 +38,9 @@
       layers: ['background', 'main', 'foreground'],
       life: { birds: { y: [20, 120], x: [300, 1000] }, sparkle: { y: [790, 935] }, leaves: { colors: ['#d9622b', '#e8a53a', '#b8341f'], x: [0, 450], y: [0, 300], also: [1300, 1672] } },
       doors: [
-        { x: 960, y: 467, w: 80, h: 166, card: 'cmu' },
-        { x: 1513, y: 460, w: 67, h: 160, card: 'comps' },
-        { x: 187, y: 453, w: 60, h: 147, card: 'clock' },
+        { x: 960, y: 467, w: 80, h: 166, card: 'cmu', path: { base: 745, steps: [732, 719, 706, 694, 681, 668, 655, 642] } },
+        { x: 1513, y: 460, w: 67, h: 160, card: 'comps', path: { base: 692, steps: [680, 667, 655, 642, 630, 617] } },
+        { x: 187, y: 453, w: 60, h: 147, card: 'clock', path: { base: 692, steps: [680, 667, 655, 642, 629, 615] } },
       ],
     },
     'the-city': {
@@ -48,9 +48,9 @@
       layers: ['background', 'recesses', 'main', 'foreground'],
       life: { rain: { ground: [715, 935] }, leaves: { colors: ['#c8692a', '#a8451f'], x: [0, 420], y: [0, 260], rate: 0.6, also: [1450, 1672] } },
       doors: [
-        { x: 1360, y: 413, w: 100, h: 280, card: 'book' },
-        { x: 513, y: 387, w: 74, h: 306, card: 'stacks' },
-        { x: 840, y: 427, w: 193, h: 273, card: 'next' },
+        { x: 1360, y: 413, w: 100, h: 280, card: 'book', path: { base: 714, steps: [699] } },
+        { x: 513, y: 387, w: 74, h: 306, card: 'stacks', path: { base: 707, steps: [694] } },
+        { x: 840, y: 427, w: 193, h: 273, card: 'next', path: { base: 712, steps: [725, 738, 751, 764, 777, 790, 803, 816, 829], clip: 713 } },
       ],
     },
   };
@@ -318,27 +318,18 @@
     g.setTransform(1, 0, 0, 1, 0, 0);
     g.clearRect(0, 0, SW, SH);
 
-    // where the walker is: on the street, or partway through a doorway
-    let fx = pos, feet = S.feet, fs = 1, fa = 1, clip = null;
-    if (anim) {
-      const p = clamp((now - anim.t0) / (STEP_IN * 1000), 0, 1), e = anim.dir > 0 ? ease(p) : 1 - ease(p), d = anim.door;
-      fx = anim.x0 + (doorCenter(d) - anim.x0) * e;
-      feet = S.feet + (d.y + d.h - S.feet) * e;
-      fs = 1 - 0.28 * e; fa = e < 0.55 ? 1 : 1 - (e - 0.55) / 0.45;
-      if (e > 0.3) clip = [d.x - 4, d.y - 40, d.w + 8, d.h + 40];
-    } else if (mode === 'talk' || mode === 'game') fa = 0;
+    const wk = walkerPose(t);
     const drawWalker = () => {
-      if (fa <= 0) return;
-      const moving = target != null || keys.l || keys.r || anim, W = walker();
-      const spr = moving ? W.walk[((walkT / 0.09) | 0) % 8] : W.idle[((t / 0.7) | 0) % 2];
-      const k = W.px * fs, fw = spr.width * k, fh = spr.height * k, x = Math.round(fx - fw / 2), y = Math.round(feet - fh + W.footPad * k);
-      g.save(); g.globalAlpha = fa;
-      if (clip) { g.beginPath(); g.rect(...clip); g.clip(); }
-      if (!anim) { g.fillStyle = 'rgba(0,0,0,.3)'; g.beginPath(); g.ellipse(fx, feet, fw * 0.42, 8, 0, 0, Math.PI * 2); g.fill(); }
-      if (anim) g.filter = `brightness(${1 - 0.5 * (1 - fa)})`;
+      if (!wk) return;
+      const { spr, x: fx, y: feet, alpha, mirror, clips, shadow } = wk;
+      const k = spr.k, fw = spr.c.width * k, fh = spr.c.height * k, x = Math.round(fx - fw / 2), y = Math.round(feet - fh + k);
+      g.save(); g.globalAlpha = alpha;
+      for (const c of clips) { g.beginPath(); g.rect(...c); g.clip(); }
+      if (shadow) { g.fillStyle = 'rgba(0,0,0,.3)'; g.beginPath(); g.ellipse(fx, feet, fw * 0.42, 8 * k / 2, 0, 0, Math.PI * 2); g.fill(); }
+      if (alpha < 1) g.filter = `brightness(${0.5 + 0.5 * alpha})`;
       g.imageSmoothingEnabled = false;
-      if (face > 0) g.drawImage(spr, x, y, fw, fh);
-      else { g.translate(x + fw, y); g.scale(-1, 1); g.drawImage(spr, 0, 0, fw, fh); }
+      if (!mirror) g.drawImage(spr.c, x, y, fw, fh);
+      else { g.translate(x + fw, y); g.scale(-1, 1); g.drawImage(spr.c, 0, 0, fw, fh); }
       g.restore();
     };
 
@@ -370,6 +361,7 @@
     const n = mode === 'walk' ? nearest() : null;
     const text = mode === 'talk' ? (touch ? 'Tap to continue.' : 'E, Space or click to continue. Esc to step back out.')
       : mode === 'game' ? 'Esc to step back out.'
+      : mode === 'enter' || mode === 'exit' ? ''
       : n ? (touch ? 'Tap the glowing door to go in.' : 'Press E to go in.')
       : touch ? 'Tap the street to walk.' : 'Walk with ← → or A/D, or click where to go.';
     if (text !== hintNow) hint.textContent = hintNow = text;
@@ -388,13 +380,7 @@
         } else dir = Math.sign(dx);
       }
       if (dir) { pos = clamp(pos + dir * SPEED * dt, S.min, S.max); face = dir; walkT += dt; } else walkT = 0;
-    } else if (anim) {
-      walkT += dt;
-      if (now - anim.t0 >= STEP_IN * 1000) {
-        const a = anim; anim = null;
-        if (a.dir > 0) arrive(a.door); else { mode = 'walk'; canvas.focus(); }
-      }
-    }
+    } else if (anim) tickAnim(dt);
     if (talk && mode === 'talk') typeTick(dt);
     camX += (camFor(pos) - camX) * Math.min(1, dt * 3);
     draw(now, dt);
@@ -422,11 +408,73 @@
   function stop() { cancelAnimationFrame(raf); spreads.stop(); keys.l = keys.r = 0; anim = talk = null; mode = 'walk'; talkBox.hidden = panel.hidden = true; panel.innerHTML = ''; }
 
   // ---------- entering, talking, leaving ----------
+  // Going in is a list of segments: walk along the street to the door, turn
+  // to face it, walk back to where the stairs start, climb one segment per
+  // tread (the raised boot lands on the next tread), then fade through the
+  // doorway. Coming out plays the same list backwards, facing the camera.
+  const depthScale = y => 1 - Math.max(0, S.feet - Math.min(y, S.feet)) * 0.0018;
+  function segments(d) {
+    const P = d.path || { base: d.y + d.h }, cx = doorCenter(d), segs = [];
+    if (Math.abs(cx - pos) > 1) segs.push({ kind: 'side', dur: Math.abs(cx - pos) / SPEED, x0: pos, x1: cx });
+    segs.push({ kind: 'turn', dur: 0.14, y0: S.feet, y1: S.feet });
+    if (Math.abs(P.base - S.feet) > 1) segs.push({ kind: 'walk', dur: Math.abs(S.feet - P.base) / 90, y0: S.feet, y1: P.base });
+    let y = P.base;
+    (P.steps || []).forEach((ty, i) => { segs.push({ kind: 'step', dur: 0.32, y0: y, y1: ty, leg: i % 2 }); y = ty; });
+    segs.push({ kind: 'door', dur: 0.45, y0: y, y1: y - 4 });
+    return segs;
+  }
+  function reversed(segs) {
+    return segs.filter(sg => sg.kind !== 'side').reverse().map(sg => ({
+      ...sg, kind: sg.kind === 'door' ? 'appear' : sg.kind, y0: sg.y1, y1: sg.y0,
+      leg: sg.leg == null ? sg.leg : 1 - sg.leg, dur: sg.kind === 'door' ? 0.35 : sg.dur,
+    }));
+  }
+  function walkerPose(t) {
+    const mk = y => window.makeWalker(S.figH * depthScale(y));
+    if (!anim) {
+      if (mode !== 'walk') return null;
+      const W = mk(S.feet), moving = target != null || keys.l || keys.r;
+      const c = moving ? W.walk[((walkT / 0.09) | 0) % 8] : W.idle[((t / 0.7) | 0) % 2];
+      return { spr: { c, k: W.px }, x: pos, y: S.feet, alpha: 1, mirror: face < 0, clips: [], shadow: true };
+    }
+    const sg = anim.segs[anim.i], p = clamp(anim.t / sg.dur, 0, 1), d = anim.door, P = d.path || {};
+    const view = anim.dir > 0 ? 'back' : 'front', clips = [];
+    if (P.clip && (sg.kind === 'step' || sg.kind === 'door' || sg.kind === 'appear')) clips.push([0, 0, SW, P.clip]);
+    let c, y = sg.y0 + (sg.y1 - sg.y0) * p, x = doorCenter(d), alpha = 1, mirror = false, shadow = false;
+    const W = mk(Math.min(sg.y0 ?? S.feet, sg.y1 ?? S.feet));
+    if (sg.kind === 'side') {
+      x = sg.x0 + (sg.x1 - sg.x0) * p; y = S.feet; mirror = sg.x1 < sg.x0; shadow = true;
+      c = W.walk[((walkT / 0.09) | 0) % 8];
+    } else if (sg.kind === 'turn') { c = W[view].stand; y = S.feet; shadow = true; }
+    else if (sg.kind === 'walk') { const Wy = mk(y); c = Wy[view].walk[((walkT / 0.13) | 0) % 4]; shadow = true; return { spr: { c, k: Wy.px }, x, y, alpha, mirror, clips, shadow }; }
+    else if (sg.kind === 'step') {
+      const riser = Math.abs(sg.y1 - sg.y0), low = Math.max(sg.y0, sg.y1);
+      if (p < 0.55) { c = W.lift(view, sg.leg, riser); y = low; }
+      else { c = W[view].stand; y = sg.y0 + (sg.y1 - sg.y0) * ease((p - 0.55) / 0.45); }
+    } else {
+      c = W[view].stand;
+      alpha = sg.kind === 'door' ? 1 - ease(p) : ease(p);
+      clips.push([d.x - 6, d.y - 60, d.w + 12, d.h + 60]);
+    }
+    return { spr: { c, k: W.px }, x, y, alpha, mirror, clips, shadow };
+  }
+  function play(d, segs, dir) {
+    anim = { door: d, segs, dir, i: 0, t: 0 };
+    if (reduce) anim.i = segs.length; // no motion: jump straight to the end
+  }
+  function tickAnim(dt) {
+    anim.t += dt; walkT += dt;
+    while (anim && anim.i < anim.segs.length && anim.t >= anim.segs[anim.i].dur) { anim.t -= anim.segs[anim.i].dur; anim.i++; }
+    if (anim && anim.i >= anim.segs.length) {
+      const a = anim; anim = null; pos = doorCenter(a.door);
+      if (a.dir > 0) arrive(a.door); else { mode = 'walk'; canvas.focus(); }
+    }
+  }
   function enter(d) {
     if (mode !== 'walk') return;
     mode = 'enter'; keys.l = keys.r = 0; target = pendingDoor = null;
-    face = doorCenter(d) >= pos ? 1 : -1;
-    anim = { door: d, dir: 1, t0: performance.now() - (reduce ? STEP_IN * 1000 : 0), x0: pos };
+    play(d, segments(d), 1);
+    if (reduce) tickAnim(0);
   }
   function arrive(d) {
     lastDoor = d;
@@ -444,8 +492,10 @@
     if (mode !== 'talk' && mode !== 'game') return;
     const d = lastDoor;
     spreads.stop(); talk = null; talkBox.hidden = true; panel.hidden = true; panel.innerHTML = '';
-    mode = 'exit'; anim = { door: d, dir: -1, t0: performance.now() - (reduce ? STEP_IN * 1000 : 0), x0: pos };
+    mode = 'exit'; pos = doorCenter(d);
+    play(d, reversed(segments(d)), -1);
     canvas.focus();
+    if (reduce) tickAnim(0);
   }
   let lastDoor = null;
   const pageText = p => (Array.isArray(p) ? p[0] : p);
