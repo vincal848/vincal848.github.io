@@ -61,7 +61,7 @@
   figcaption { font: 400 11.5px/1.4 var(--sans); color: var(--muted); margin-top: 5px; }
   figcaption .credit { display: block; text-transform: uppercase; font-size: 9.5px; letter-spacing: .06em; margin-top: 2px; }
   /* ---------- spot colour (paper only, front page) ---------- */
-  [data-mode="paper"] .whatsnews > h2 { background: var(--accent); color: #fff; border: 0; padding: 5px 8px; }
+  [data-mode="paper"] .aboutbox > h2 { background: var(--accent); color: #fff; border: 0; padding: 5px 8px; }
   [data-mode="paper"] .lead .body > p:first-child::first-letter { color: var(--accent); }
   [data-mode="paper"] .pull { color: var(--accent); }
   .pull { font: italic 700 21px/1.3 "Playfair Display", serif; border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule); padding: 10px 0; margin: 4px 0 12px; break-inside: avoid; text-align: left; }
@@ -74,10 +74,11 @@
   .front > *:first-child { padding-left: 0; }
   .front > *:last-child { padding-right: 0; }
   .front > * + * { border-left: 1px solid var(--hair); }
-  .whatsnews > h2 { font: 700 13px var(--sans); text-transform: uppercase; letter-spacing: .06em; border-bottom: 2px solid var(--rule); padding-bottom: 4px; margin: 0 0 10px; }
-  .whatsnews ul { list-style: none; padding: 0; margin: 0; }
-  .whatsnews li { font-size: 14px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--hair); }
-  .whatsnews li:last-child { border: 0; }
+  .aboutbox > h2 { font: 700 13px var(--sans); text-transform: uppercase; letter-spacing: .06em; border-bottom: 2px solid var(--rule); padding-bottom: 4px; margin: 0 0 10px; }
+  .aboutbox p { font-size: 14px; margin: 0 0 10px; }
+  .aboutbox .portrait { float: left; width: 84px; margin: 3px 12px 6px 0; padding: 0; }
+  .aboutbox .portrait span { font: 900 30px/1 'Playfair Display', serif; color: var(--ink); }
+  .aboutbox .facts { clear: both; margin: 0 0 14px; }
   .index { font: 400 12.5px/1.5 var(--sans); }
   .index div { display: flex; justify-content: space-between; border-bottom: 1px dotted var(--hair); }
   .index div:last-child { border: 0; }
@@ -94,21 +95,18 @@
   section.desk { margin-top: 30px; }
   .desk > h2 { display: flex; justify-content: space-between; font: 700 14px var(--sans); text-transform: uppercase; letter-spacing: .08em; border-top: 3px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 6px 0; margin: 0 0 14px; }
   .desk > h2 small { font-weight: 600; color: var(--muted); }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-  .grid article { padding: 0 16px 16px; }
-  .grid article:nth-child(3n+1) { padding-left: 0; }
-  .grid article:nth-child(3n) { padding-right: 0; }
-  .grid article:not(:nth-child(3n+1)) { border-left: 1px solid var(--hair); }
+  .grid { column-count: 3; column-gap: 32px; column-rule: 1px solid var(--hair); }
+  .grid > article { break-inside: avoid; padding: 0 0 14px; margin: 0 0 16px; border-bottom: 1px solid var(--hair); }
   .grid p { font-size: 14.5px; }
-  .grid.four { grid-template-columns: repeat(4, 1fr); }
+  .grid.two { column-count: 2; }
+  .grid.four { display: grid; grid-template-columns: repeat(4, 1fr); column-count: auto; column-rule: none; }
+  .grid.four > article { border-bottom: 0; margin: 0; }
   .four article { padding: 0 16px 16px !important; border-left: 1px solid var(--hair); }
   .four article:first-child { padding-left: 0 !important; border-left: 0; }
   .four article:last-child { padding-right: 0 !important; }
   .portrait.city { aspect-ratio: 3 / 2; max-width: none; margin-bottom: 8px; padding: 0; text-decoration: none; text-transform: uppercase; letter-spacing: .08em; }
   .portrait .scene-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .play-badge { position: absolute; right: 6px; bottom: 6px; background: rgba(14,10,20,.85); color: #fff; font: 700 11px/1 var(--sans); padding: 5px 8px; border-radius: 3px; letter-spacing: .04em; text-transform: none; }
-  /* empty slot for a future project: replace it with a copy of any <article> */
-  .slot { color: var(--muted); font-style: italic; font-size: 14px; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 110px; border: 1px dashed var(--hair) !important; }
 
   /* data tables */
   table.data { width: 100%; border-collapse: collapse; font: 400 13px/1.35 var(--sans); }
@@ -119,12 +117,7 @@
   .tablenote { font: 400 11px var(--sans); color: var(--muted); margin-top: 6px; }
 
 
-  /* ---------- about the author ---------- */
-  .about { display: grid; grid-template-columns: 220px 1.6fr 1fr; gap: 0; }
-  .about > * { padding: 0 16px; }
-  .about > *:first-child { padding-left: 0; }
-  .about > *:last-child { padding-right: 0; }
-  .about > * + * { border-left: 1px solid var(--hair); }
+  /* ---------- portraits, fact tables ---------- */
   .portrait { position: relative; aspect-ratio: 4 / 5; border: 1px dashed var(--muted); display: flex; align-items: center; justify-content: center; text-align: center; font: 400 12px/1.4 var(--sans); color: var(--muted); padding: 12px; overflow: hidden; }
   .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .facts { width: 100%; font: 400 13px/1.4 var(--sans); border-collapse: collapse; margin-top: 10px; }
@@ -132,8 +125,6 @@
   .facts td { padding: 5px 0; border-bottom: 1px dotted var(--hair); }
   .facts tr:first-child td { border-top: 0; }
   .fill { color: var(--muted); font-style: italic; background: rgba(0,0,0,.05); padding: 0 4px; }
-  .about .body { column-count: 1; }
-  .corrections p { font-size: 14px; }
 
   footer { margin: 36px 0 40px; border-top: 3px double var(--rule); padding-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; font: 600 11px var(--sans); text-transform: uppercase; letter-spacing: .05em; }
 
@@ -156,14 +147,13 @@
   [data-mode="site"] .kicker { color: #0274b6; }
   [data-mode="site"] .dek { font-style: normal; color: var(--muted); }
   [data-mode="site"] .byline { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 13px; }
-  [data-mode="site"] .whatsnews > h2, [data-mode="site"] .desk > h2, [data-mode="site"] .data caption { border-top: 0; border-bottom: 1px solid var(--ink); text-transform: none; letter-spacing: 0; font-size: 18px; font-family: var(--serif); }
+  [data-mode="site"] .aboutbox > h2, [data-mode="site"] .desk > h2, [data-mode="site"] .data caption { border-top: 0; border-bottom: 1px solid var(--ink); text-transform: none; letter-spacing: 0; font-size: 18px; font-family: var(--serif); }
   [data-mode="site"] .desk > h2 small { display: none; }
   [data-mode="site"] .feature { border-top: 1px solid var(--hair); }
   [data-mode="site"] .box { border-color: var(--hair); border-radius: 6px; background: #fafafa; }
   [data-mode="site"] figure img { border-radius: 4px; }
-  [data-mode="site"] .grid { gap: 20px; }
-  [data-mode="site"] .grid article { padding: 0 0 16px !important; border-left: 0 !important; border-bottom: 1px solid var(--hair); }
-  [data-mode="site"] .slot, [data-mode="site"] .portrait { border-radius: 6px; }
+  [data-mode="site"] .grid { column-rule-color: transparent; }
+  [data-mode="site"] .portrait { border-radius: 6px; }
   [data-mode="site"] .data tr:nth-child(even) td { background: #f7f7f7; }
   [data-mode="site"] footer { border-top: 1px solid var(--hair); font-weight: 400; color: var(--muted); }
 
@@ -185,12 +175,10 @@
   @media (max-width: 860px) {
     .masthead { grid-template-columns: 1fr; }
     .ear { display: none; }
-    .front, .feature, .about { grid-template-columns: 1fr; }
-    .front > *, .about > * { border-left: 0 !important; padding: 0 !important; margin-bottom: 20px; }
-    .portrait { max-width: 240px; }
-    .grid { grid-template-columns: 1fr; }
+    .front, .feature { grid-template-columns: 1fr; }
+    .front > * { border-left: 0 !important; padding: 0 !important; margin-bottom: 20px; }
+    .grid, .grid.two { column-count: 1; }
     .grid.four { grid-template-columns: repeat(2, 1fr); gap: 0 14px; }
-    .grid article { padding: 0 0 14px !important; border-left: 0 !important; border-bottom: 1px solid var(--hair); margin-bottom: 14px; }
     .lead .body { column-count: 1; }
     .edition span:first-child, .edition span:last-child { display: none; }
     .edition { justify-content: center; }
@@ -211,7 +199,7 @@
   <header class="masthead">
     <div class="ear"><b>Inside</b>Five years of New York grid prices, forecast as a distribution. A1</div>
     <div><h1>The Daily Spread</h1><p class="editor">Caleb Vinson, Editor</p></div>
-    <div class="ear r"><b>Experience</b>Summer 2026 on a systematic gas desk at Mercuria Energy. E1</div>
+    <div class="ear r"><b>Experience</b>Summer 2026 on a systematic gas desk at Mercuria Energy. B1</div>
   </header>
   <div class="edition">
     <span>Vol. I · No. 1</span>
@@ -229,40 +217,44 @@
   </div>
 
   <nav>
-    <a href="#front">Front Page</a>
+    <a href="#about">About</a>
+    <a href="#careers">Experience</a>
     <a href="#markets">Markets</a>
     <a href="#pricing">Pricing &amp; Models</a>
-    <a href="#tools">Tools</a>
-    <a href="#careers">Experience</a>
-    <a href="#research">Research</a>
+    <a href="#projects">Research &amp; Projects</a>
     <a href="#datelines">Datelines</a>
-    <a href="#about">About</a>
     <a href="mailto:calebjvinson848@gmail.com">Contact</a>
   </nav>
 
   <!-- ================= A1 FRONT PAGE ================= -->
   <main id="front" class="front">
 
-    <aside class="whatsnews">
-      <h2>What's News</h2>
-      <ul>
-        <li><strong>Energy:</strong> Spent summer 2026 at Mercuria Energy in Houston, trading Henry Hub futures on in-house gas production forecasts. E1</li>
-        <li><strong>Competitions:</strong> Top 5% globally in IMC Prosperity; top 10 in volatility and top quartile in ETF trading of 160 at the CMU MSCF Trading Competition.</li>
-        <li><strong>Education:</strong> MS in Computational Finance, Carnegie Mellon University, finishing December 2026.</li>
-      </ul>
+    <!-- About: portrait appears automatically once assets/bio.jpg exists -->
+    <aside class="aboutbox" id="about">
+      <h2>About</h2>
+      <div class="portrait"><span>CV</span><img src="assets/bio.jpg" alt="Portrait of Caleb Vinson" onerror="this.remove()"></div>
+      <p>Howdy. I'm Caleb Vinson, a Master's student in Computational Finance at Carnegie Mellon University, by way of Texas. I spent summer 2026 on a systematic natural gas desk at Mercuria Energy.</p>
+      <p>I work on systematic trading, energy and power markets, derivatives pricing and forecasting. Every project here is measured against something, and when the baseline wins, the headline says so.</p>
+      <table class="facts">
+        <tr><th>Education</th><td>MS Computational Finance, Carnegie Mellon (Dec. 2026)<br>B.S. Economics &amp; Mathematics, Texas Tech</td></tr>
+        <tr><th>Languages</th><td>Python, R, C, C++, kdb+/q, SQL, MATLAB, VBA</td></tr>
+        <tr><th>Libraries</th><td>NumPy, pandas, SciPy, statsmodels, LightGBM, PyTorch, TensorFlow</td></tr>
+        <tr><th>Data</th><td>DuckDB, Parquet, Nasdaq ITCH, NYISO, CRSP/WRDS, LSEG Datastream, IBKR API</td></tr>
+        <tr><th>Off the clock</th><td>College football, Arabic (intermediate), travel, reading, grand-strategy games</td></tr>
+        <tr><th>Contact</th><td><a href="mailto:calebjvinson848@gmail.com"><u>Email</u></a> · <a href="https://www.linkedin.com/in/calebjvinson/"><u>LinkedIn</u></a> · <a href="https://github.com/vincal848"><u>GitHub</u></a></td></tr>
+      </table>
       <div class="box index">
         <h2>In This Issue</h2>
         <div><a href="#front">Front Page</a><span>A1</span></div>
         <div><a href="#grid-feature">The Grid, Mapped</a><span>A2</span></div>
-        <div><a href="#markets">Markets &amp; Trading</a><span>B1</span></div>
-        <div><a href="#pricing">Pricing &amp; Models</a><span>C1</span></div>
-        <div><a href="#tools">Tools &amp; Other</a><span>D1</span></div>
-        <div><a href="#careers">Experience &amp; Education</a><span>E1</span></div>
-        <div><a href="#research">Research &amp; Writing</a><span>E2</span></div>
-        <div><a href="#datelines">Datelines</a><span>E3</span></div>
-        <div><a href="#about">About the Author</a><span>E4</span></div>
+        <div><a href="#careers">Experience &amp; Education</a><span>B1</span></div>
+        <div><a href="#markets">Markets &amp; Trading</a><span>C1</span></div>
+        <div><a href="#pricing">Pricing &amp; Models</a><span>C2</span></div>
+        <div><a href="#projects">Research &amp; Side Projects</a><span>D1</span></div>
+        <div><a href="#datelines">Datelines</a><span>E1</span></div>
       </div>
     </aside>
+
 
     <article class="lead">
       <p class="kicker">Power Markets</p>
@@ -326,13 +318,58 @@
     </div>
   </section>
 
-  <!-- ================= SECTIONS =================
-       To add a project: copy any <article> into the right .grid,
-       or replace a .slot. Three per row on desktop. -->
+  <!-- ================= B1 EXPERIENCE & EDUCATION =================
+       One <article> per role, newest first; one <tr> per school. -->
+  <section id="careers" class="desk">
+    <h2>Experience &amp; Education <small>B1</small></h2>
+    <div class="grid two">
+      <article>
+        <p class="kicker">Mercuria Energy · Houston · Summer 2026</p>
+        <h4 class="hed">Trading Gas Production Surprises Before the Vendors Report</h4>
+        <p>As a systematic and algorithmic trading intern, I forecast Lower 48 and basin-level natural gas production with a pooled random forest, to 0.4 Bcf/d out-of-sample error and about 12 hours ahead of vendor releases. The signal expanded front-month Henry Hub trading to 2.5 times the original trade days at a 1.6 Sharpe ratio.</p>
+        <p>I mapped more than 20,000 meters to their basins with geographic polygons, automated nightly retraining on weather and pipeline data for 10+ traders, and pitched the natural gas managing director as one of three on a new desk, which won capital for its first funded strategy.</p>
+        <p class="stack">Systematic &amp; Algorithmic Trading Intern</p>
+      </article>
+      <article>
+        <p class="kicker">Hilltop Holdings · Dallas · Summer 2023</p>
+        <h4 class="hed">Stress-Testing a Bank's Real-Estate Book</h4>
+        <p>Rebuilt eight CCAR stress-testing models as modular Python, and modeled loss given default and exposure at default with Markov-chain transition matrices and Monte Carlo paths across baseline, adverse and severely adverse scenarios. Backtests and sensitivity results went to senior risk leadership.</p>
+        <p class="stack">Quantitative Finance Intern</p>
+      </article>
+      <article>
+        <p class="kicker">Competitions</p>
+        <h4 class="hed">Three Trading Competitions</h4>
+        <p><strong>IMC Prosperity:</strong> top 5% globally (the market maker is under Markets). <strong>CMU MSCF Trading Competition:</strong> top 10 in volatility, top quartile in ETF trading, of 160. <strong>Jane Street:</strong> market-making competition.</p>
+      </article>
+    </div>
+    <table class="data">
+      <thead>
+        <tr><th>School</th><th>Degree</th><th class="hide-sm">Relevant coursework</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Carnegie Mellon University, Tepper School of Business</td><td>MS, Computational Finance (MSCF), Dec. 2026</td><td class="hide-sm">Machine learning, stochastic calculus, options pricing, simulation and time series, financial computing</td></tr>
+        <tr><td>Texas Tech University</td><td>B.S. Economics &amp; Mathematics (Data Science); B.G.S. Actuarial Science, Biology &amp; Chemistry, May 2025</td><td class="hide-sm">Ph.D. stochastic calculus (A+), Ph.D. high-frequency trading (audited), econometrics, time series</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ================= PROJECT DESKS =================
+       To add a project: copy any <article> into the right .grid. Articles
+       flow down three newspaper columns, so heights don't need to match. -->
 
   <section id="markets" class="desk">
-    <h2>Markets &amp; Trading <small>B1</small></h2>
+    <h2>Markets &amp; Trading <small>C1</small></h2>
     <div class="grid">
+      <article>
+        <p class="kicker">ESG</p>
+        <h4 class="hed"><a href="https://github.com/vincal848/esg-imaging">Can Satellites See ESG Before the Ratings Do?</a></h4>
+        <figure>
+          <picture><source srcset="assets/esg-forest.png" media="(prefers-reduced-motion: reduce)"><img src="assets/esg-forest.gif" alt="Animation: satellite tree-cover loss around one EPA-reporting facility in northeast Florida building up year by year from 2001 to 2024, yellow for early years and red for recent ones. By 2024, 39% of the area within 2 km has lost tree cover, against 34% in the 2 to 10 km ring."></picture>
+          <figcaption>Tree-cover loss around one GHGRP facility in northeast Florida, 2001–2024: the 2 km buffer against the 2–10 km ring, the comparison the tests make. Data: Hansen et al. 2013, Global Forest Change v1.12, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<span class="credit">esg-imaging</span></figcaption>
+        </figure>
+        <p>Forest loss around 2,557 EPA-reporting facilities shows no lead over enforcement actions in two pre-registered tests. Flaring and ratings need licensed data.</p>
+        <p class="stack">Python</p>
+      </article>
       <article>
         <p class="kicker">Competition</p>
         <h4 class="hed"><a href="https://github.com/vincal848/imc-prosperity-market-making">A Market Maker That Beats Its Baseline, and a Product Where Nothing Can</a></h4>
@@ -358,16 +395,6 @@
         <p class="stack">Python</p>
       </article>
       <article>
-        <p class="kicker">ESG</p>
-        <h4 class="hed"><a href="https://github.com/vincal848/esg-imaging">Can Satellites See ESG Before the Ratings Do?</a></h4>
-        <figure>
-          <picture><source srcset="assets/esg-forest.png" media="(prefers-reduced-motion: reduce)"><img src="assets/esg-forest.gif" alt="Animation: satellite tree-cover loss around one EPA-reporting facility in northeast Florida building up year by year from 2001 to 2024, yellow for early years and red for recent ones. By 2024, 39% of the area within 2 km has lost tree cover, against 34% in the 2 to 10 km ring."></picture>
-          <figcaption>Tree-cover loss around one GHGRP facility in northeast Florida, 2001–2024: the 2 km buffer against the 2–10 km ring, the comparison the tests make. Data: Hansen et al. 2013, Global Forest Change v1.12, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.<span class="credit">esg-imaging</span></figcaption>
-        </figure>
-        <p>Forest loss around 2,557 EPA-reporting facilities shows no lead over enforcement actions in two pre-registered tests. Flaring and ratings need licensed data.</p>
-        <p class="stack">Python</p>
-      </article>
-      <article>
         <p class="kicker">Prediction Markets</p>
         <h4 class="hed"><a href="https://github.com/vincal848/predictions">Pricing the Midterms</a></h4>
         <p>A rate-limited API client and order-book puller for the SIG Predictions Cup on the 2026 midterm elections. Pricing logic comes next.</p>
@@ -377,7 +404,7 @@
   </section>
 
   <section id="pricing" class="desk">
-    <h2>Pricing &amp; Models <small>C1</small></h2>
+    <h2>Pricing &amp; Models <small>C2</small></h2>
     <div class="grid">
       <article>
         <p class="kicker">Rates</p>
@@ -417,13 +444,28 @@
         <p>VIF-based backward elimination and OLS, validated on synthetic data with known coefficients.</p>
         <p class="stack">Python</p>
       </article>
-      <article class="slot">Space reserved for the next project</article>
     </div>
   </section>
 
-  <section id="tools" class="desk">
-    <h2>Tools &amp; Other <small>D1</small></h2>
+  <!-- ================= D1 RESEARCH & SIDE PROJECTS ================= -->
+  <section id="projects" class="desk">
+    <h2>Research &amp; Side Projects <small>D1</small></h2>
     <div class="grid">
+      <article>
+        <p class="kicker">Undergraduate Thesis · 2024–25</p>
+        <h4 class="hed">Picking Stocks When the Tails Have Memory</h4>
+        <p>Weighted latent root regression combined with an ARFIMA-FIGARCH model under normal-inverse-Gaussian errors, for portfolio selection when returns are heavy-tailed and volatility is long-memory, with factor Monte Carlo paths for return forecasts.</p>
+      </article>
+      <article>
+        <p class="kicker">Economics Research · Texas Tech</p>
+        <h4 class="hed">What College Athletes' NIL Deals Do to a Roster</h4>
+        <p>As an undergraduate researcher and coauthor, I estimated difference-in-differences models on more than 33,000 panel observations of name, image and likeness valuation and team construction.</p>
+      </article>
+      <article>
+        <p class="kicker">Book Chapters</p>
+        <h4 class="hed">Four Chapters on Sentiment Analysis From Text</h4>
+        <p>Four textbook chapters and an R/Python curriculum linking text sentiment to asset prices, built on news pipelines that refresh every five minutes.</p>
+      </article>
       <article>
         <p class="kicker">Data</p>
         <h4 class="hed"><a href="https://github.com/vincal848/sas-to-csv">SAS Exports, Converted in Parallel</a></h4>
@@ -461,69 +503,11 @@
     </div>
   </section>
 
-  <!-- ================= E1 EXPERIENCE & EDUCATION =================
-       One <article> per role, newest first; one <tr> per school. -->
-  <section id="careers" class="desk">
-    <h2>Experience &amp; Education <small>E1</small></h2>
-    <div class="grid">
-      <article>
-        <p class="kicker">Mercuria Energy · Houston · Summer 2026</p>
-        <h4 class="hed">Trading Gas Production Surprises Before the Vendors Report</h4>
-        <p>As a systematic and algorithmic trading intern, I forecast Lower 48 and basin-level natural gas production with a pooled random forest, to 0.4 Bcf/d out-of-sample error and about 12 hours ahead of vendor releases. The signal expanded front-month Henry Hub trading to 2.5 times the original trade days at a 1.6 Sharpe ratio.</p>
-        <p>I mapped more than 20,000 meters to their basins with geographic polygons, automated nightly retraining on weather and pipeline data for 10+ traders, and pitched the natural gas managing director as one of three on a new desk, which won capital for its first funded strategy.</p>
-        <p class="stack">Systematic &amp; Algorithmic Trading Intern</p>
-      </article>
-      <article>
-        <p class="kicker">Hilltop Holdings · Dallas · Summer 2023</p>
-        <h4 class="hed">Stress-Testing a Bank's Real-Estate Book</h4>
-        <p>Rebuilt eight CCAR stress-testing models as modular Python, and modeled loss given default and exposure at default with Markov-chain transition matrices and Monte Carlo paths across baseline, adverse and severely adverse scenarios. Backtests and sensitivity results went to senior risk leadership.</p>
-        <p class="stack">Quantitative Finance Intern</p>
-      </article>
-      <article>
-        <p class="kicker">Competitions</p>
-        <h4 class="hed">Three Trading Competitions</h4>
-        <p><strong>IMC Prosperity:</strong> top 5% globally (the market maker is under Markets). <strong>CMU MSCF Trading Competition:</strong> top 10 in volatility, top quartile in ETF trading, of 160. <strong>Jane Street:</strong> market-making competition.</p>
-      </article>
-    </div>
-    <table class="data">
-      <thead>
-        <tr><th>School</th><th>Degree</th><th class="hide-sm">Relevant coursework</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Carnegie Mellon University, Tepper School of Business</td><td>MS, Computational Finance (MSCF), Dec. 2026</td><td class="hide-sm">Machine learning, stochastic calculus, options pricing, simulation and time series, financial computing</td></tr>
-        <tr><td>Texas Tech University</td><td>B.S. Economics &amp; Mathematics (Data Science); B.G.S. Actuarial Science, Biology &amp; Chemistry, May 2025</td><td class="hide-sm">Ph.D. stochastic calculus (A+), Ph.D. high-frequency trading (audited), econometrics, time series</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ================= E2 RESEARCH & WRITING =================
-       Copy an <article> per paper, chapter or project; replace the slots. -->
-  <section id="research" class="desk">
-    <h2>Research &amp; Writing <small>E2</small></h2>
-    <div class="grid">
-      <article>
-        <p class="kicker">Undergraduate Thesis · 2024–25</p>
-        <h4 class="hed">Picking Stocks When the Tails Have Memory</h4>
-        <p>Weighted latent root regression combined with an ARFIMA-FIGARCH model under normal-inverse-Gaussian errors, for portfolio selection when returns are heavy-tailed and volatility is long-memory, with factor Monte Carlo paths for return forecasts.</p>
-      </article>
-      <article>
-        <p class="kicker">Economics Research · Texas Tech</p>
-        <h4 class="hed">What College Athletes' NIL Deals Do to a Roster</h4>
-        <p>As an undergraduate researcher and coauthor, I estimated difference-in-differences models on more than 33,000 panel observations of name, image and likeness valuation and team construction.</p>
-      </article>
-      <article>
-        <p class="kicker">Book Chapters</p>
-        <h4 class="hed">Four Chapters on Sentiment Analysis From Text</h4>
-        <p>Four textbook chapters and an R/Python curriculum linking text sentiment to asset prices, built on news pipelines that refresh every five minutes.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ================= E3 DATELINES =================
+  <!-- ================= E1 DATELINES =================
        Each slot opens a walkable scene (scene.js; art in assets/scenes/<city>/).
        Without JavaScript the slot is a plain link to the section in href. -->
   <section id="datelines" class="desk">
-    <h2>Datelines <small>E3</small></h2>
+    <h2>Datelines <small>E1</small></h2>
     <div class="grid four">
       <article>
         <p class="kicker">Houston</p>
@@ -552,51 +536,9 @@
     </div>
   </section>
 
-  <!-- ================= E4 ABOUT THE AUTHOR =================
-       Bio photo: save a portrait as assets/bio.jpg and it appears automatically.
-       Fill in the .fill placeholders below. -->
-  <section id="about" class="desk">
-    <h2>About the Author <small>E4</small></h2>
-    <div class="about">
-      <div>
-        <figure>
-          <div class="portrait">
-            <span style="font:900 64px/1 'Playfair Display',serif;color:var(--ink)">CV</span>
-            <img src="assets/bio.jpg" alt="Portrait of Caleb Vinson" onerror="this.remove()">
-          </div>
-          <figcaption>Caleb Vinson</figcaption>
-        </figure>
-      </div>
-      <div>
-        <p class="kicker">Profile</p>
-        <h3 class="hed">Beat the Benchmark, or Say So</h3>
-        <div class="body">
-          <p>Howdy, and thanks for reading. I'm a Master's student in Computational Finance at Carnegie Mellon University, by way of Texas, and I spent this summer on a systematic natural gas desk. My work is in algorithmic and systematic trading, energy and power markets, derivatives pricing, and forecasting. Most of it is statistical modeling and simulation in Python, R and C/C++.</p>
-          <p>Every project in this paper is measured against something: a closed form, an exact optimum, a textbook answer, or a naive baseline. When the baseline wins, the headline says so.</p>
-        </div>
-        <table class="facts">
-          <tr><th>Education</th><td>MS Computational Finance, Carnegie Mellon University (Dec. 2026)<br>B.S. Economics &amp; Mathematics, Texas Tech University</td></tr>
-          <tr><th>Focus</th><td>Systematic trading, energy and power markets, derivatives pricing, market microstructure</td></tr>
-          <tr><th>Off the clock</th><td>College football, Arabic (intermediate), travel, reading, grand-strategy games</td></tr>
-          <tr><th>Contact</th><td><a href="mailto:calebjvinson848@gmail.com"><u>calebjvinson848@gmail.com</u></a> · <a href="https://www.linkedin.com/in/calebjvinson/"><u>LinkedIn</u></a> · <a href="https://github.com/vincal848"><u>GitHub</u></a></td></tr>
-        </table>
-      </div>
-      <div class="corrections">
-        <div class="box" style="margin:0 0 16px">
-          <h2>Skills</h2>
-          <table class="facts">
-            <tr><th>Languages</th><td>Python, R, C, C++, kdb+/q, SQL, MATLAB, VBA</td></tr>
-            <tr><th>Libraries</th><td>NumPy, pandas, SciPy, statsmodels, LightGBM, PyTorch, TensorFlow</td></tr>
-            <tr><th>Data</th><td>DuckDB, Parquet, Nasdaq ITCH, NYISO, CRSP/WRDS, LSEG Datastream, IBKR API</td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <footer>
     <span>© 2026 Caleb Vinson</span>
-    <span>A Front · B Markets · C Pricing · D Tools · E Experience, Research, Datelines &amp; About</span>
+    <span>A Front · B Experience · C Markets &amp; Models · D Research &amp; Projects · E Datelines</span>
     <span><a href="https://github.com/vincal848">GitHub</a> · <a href="https://www.linkedin.com/in/calebjvinson/">LinkedIn</a> · <a href="mailto:calebjvinson848@gmail.com">Email</a></span>
   </footer>
 </div>
